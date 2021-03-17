@@ -575,7 +575,7 @@ class SList
               return found;
           }
 
-          currentptr?currentptr->next();
+          currentptr=currentptr->next();
       }
       
 
