@@ -29,6 +29,7 @@ class Stack
   Stack ()
   {
       //TODO
+      list=SList<T>::create();  
       assert(is_empty());
   }
 
@@ -54,6 +55,7 @@ class Stack
       //TODO
       //Hint: delegate in the SList type.
 
+
       return stack;
   }
 
@@ -71,7 +73,7 @@ class Stack
   bool is_empty () const
   {
       //TODO
-      return false;
+      return list->is_empty();
   }
 
   /** @brief get the top item.
@@ -81,7 +83,7 @@ class Stack
   {
       assert(! is_empty());
       //TODO
-      return T();
+      return list->front();
   }
 
   /**
@@ -93,6 +95,7 @@ class Stack
   {
       //TODO
       //Hint: delegate in the SList type.
+      list->folt();
   }
 
   /**
@@ -109,6 +112,7 @@ class Stack
   void push(const T& new_it)
   {
       //TODO
+      list->push_front(new_it);
 
       assert(top()==new_it);
   }
@@ -120,6 +124,7 @@ class Stack
   {
       assert(! is_empty());
       //TODO
+      list->pop_front();
 
   }
 
@@ -129,6 +134,7 @@ protected:
 
   //TODO:
   //Hint:  delegate in SList<T> to implement the TAD Stack.
+  typename SList<T>::Ref list;
 
 };
 
