@@ -480,7 +480,7 @@ class SList
           }
           
           auxptr->set_next(currentptr->next());
-          currentptr=auxptr;
+          currentptr=currentptr->next();
           
       }
 
