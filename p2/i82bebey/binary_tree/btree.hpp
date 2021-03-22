@@ -134,8 +134,8 @@ public:
 protected:
     //TODO
     //Hint: use typename SNode<T>::Ref for the link to other nodes.
-    typename SNode<T>::Ref leftptr;
-    typename SNode<T>::Ref rightptr;
+    typename BTNode<T>::Ref leftptr;
+    typename BTNode<T>::Ref rightptr;
     T data;
 };
 
