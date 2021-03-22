@@ -331,7 +331,20 @@ class BTree
   std::ostream& fold(std::ostream& out) const
   {
       //TODO
-
+      if (is_empty() == true )
+      {
+          out<<"[]";
+      }
+      else
+      {
+          out<<"[";
+          out<<" "<<item();
+          fold(out);
+          out<<" ";
+          fold(out)
+          out<<"]";
+      }
+      
 
       //
       return out;
