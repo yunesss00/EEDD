@@ -275,7 +275,7 @@ class BTree
       BTree<T>::Ref l_subtree;
 
       //TODO
-      if (has_left() == false) 
+      if (l_subtree->has_left() == false) 
       {
           l_subtree = nullptr;
       }
@@ -300,7 +300,7 @@ class BTree
       BTree<T>::Ref r_subtree;
 
       //TODO
-      if (has_right() == false) 
+      if (r_subtree->has_right() == false) 
       {
           r_subtree = nullptr;
       }
