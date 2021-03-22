@@ -25,6 +25,7 @@ int compute_height (typename BTree<T>::Ref t)
     int ret_val = -1;
 
     //TODO
+    
 
     return ret_val;
 }

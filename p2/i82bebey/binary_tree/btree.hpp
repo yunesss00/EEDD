@@ -29,6 +29,9 @@ public:
     BTNode (T const& it=T(), BTNode<T>::Ref left=nullptr, BTNode<T>::Ref right=nullptr)
     {
         //TODO
+        data = it;
+        leftptr = left;
+        rightptr = right;
     }
 
     /**
@@ -56,13 +59,14 @@ public:
     const T& item() const
     {
         //TODO
-        return T();
+        return data;
     }
 
     /** @brief Has it a left child?*/
     bool has_left() const
     {
         //TODO
+        if (leftptr != nullptr) return true;
         return false;
     }
 
@@ -70,13 +74,14 @@ public:
     BTNode<T>::Ref left() const
     {
         //TODO
-        return nullptr;
+        return leftptr;
     }
 
     /** @brief Has it a right child? */
     bool has_right() const
     {
         //TODO
+        if (rightptr != nullptr) return true;
         return false;
     }
 
@@ -84,7 +89,7 @@ public:
     BTNode<T>::Ref right() const
     {
         //TODO
-        return nullptr;
+        return rightptr;
     }
     /** @}*/
 
@@ -95,35 +100,43 @@ public:
     void set_item(const T& new_it)
     {
         //TODO
+        data = new_it;
     }
 
     /** @brief Set the left child.*/
     void set_left(BTNode<T>::Ref new_child)
     {
         //TODO
+        leftptr = new_child;
     }
 
     /** @brief Remove link to the left child. */
     void remove_left()
     {
         //TODO: hint see std::share_ptr doc.
+        leftptr = nullptr;
     }
 
     /** @brief Set the right child.*/
     void set_right(BTNode<T>::Ref new_child)
     {
         //TODO
+        rightptr = new_child;
     }
 
     /** @brief Remove linkt to the right child. */
     void remove_right()
     {
         //TODO: hint see std::share_ptr doc.
+        rightptr = nullptr;
     }
 
 protected:
     //TODO
     //Hint: use typename SNode<T>::Ref for the link to other nodes.
+    typename SNode<T>::Ref leftptr;
+    typename SNode<T>::Ref rightptr;
+    T data;
 };
 
 /**
