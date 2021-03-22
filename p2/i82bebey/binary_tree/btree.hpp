@@ -344,7 +344,7 @@ class BTree
   /** @{*/
 
   /**
-   * @brief set the roor's item.
+   * @brief set the root's item.
    * @pre not is_empty()
    */
   void set_item(const T& new_it)
@@ -409,7 +409,7 @@ class BTree
   {
       assert(!is_empty());
       //TODO
-      rootptr->set_right(t);
+      //rootptr->set_right(t);
   }
 
   /**
@@ -420,7 +420,7 @@ class BTree
   {
       assert(!is_empty());
       //TODO
-      rootptr->remove_right();
+     // rootptr->remove_right();
   }
 
   /** @}*/
