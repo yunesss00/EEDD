@@ -387,7 +387,7 @@ class BTree
   {
       assert(!is_empty());
       //TODO
-      rootptr->set_left(new_left);
+      //rootptr->set_left(new_left);
   }
 
   /**
@@ -420,7 +420,7 @@ class BTree
   {
       assert(!is_empty());
       //TODO
-     // rootptr->remove_right();
+      rootptr->remove_right();
   }
 
   /** @}*/
