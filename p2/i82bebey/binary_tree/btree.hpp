@@ -220,20 +220,37 @@ class BTree
 
       //TODO
       
-      std::string aux = token.substr(token.find(' ')+1);
+      std::string auxAllNodes = token.substr(token.find(' ')+1);
+      std::string auxAllNodes_2 = auxAllNodes;
+
+      std::string spacePosition_1;
+      std::string spacePosition_2;
+      T val;
 
 
       if (token == "[]")
       {
           return tree;
       }
-
-      if (aux[0] != '[' or aux[aux.size()-1] != ']'){
-
+      else if (auxAllNodes[0] != '[' or auxAllNodes[auxAllNodes.size()-1] != ']')
+      {
          throw std::runtime_error("Wrong input format.");
+      }
+      else
+      {
+         spacePosition_1 = str::auxAllNodes.find(' '); //pos of the first space
+         auxAllNodes_2 = auxAllNodes.substr(spacePosition_2);
 
+         spacePosition_2 = str::auxAllNodes.find(' '); //pos of the second space
+
+         val = (T)auxAllNodes.substr(spacePosition_1,spacePosition_2-spacePosition_1);
+         rootptr->set_item(val);        
+
+
+         auxAllNodes = auxAllNodes.substr(spacePosition_2);
 
       }
+      
       
       
       
@@ -343,7 +360,7 @@ class BTree
       else
       {
           out<<"[ ";
-          out<<item();
+          out<<rootptr->item();
           out<<" ";
           fold(out);
           out<<" ";
