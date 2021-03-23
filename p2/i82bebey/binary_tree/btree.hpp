@@ -174,7 +174,7 @@ class BTree
   BTree (const T& item)
   {
       //TODO
-      rootptr = BTree<T>::Ref create(item);
+      rootptr = BTree<T>::create(item);
 
   }
 
