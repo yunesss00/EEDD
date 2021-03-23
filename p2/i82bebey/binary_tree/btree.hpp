@@ -174,7 +174,7 @@ class BTree
   BTree (const T& item)
   {
       //TODO
-      rootptr->set_item(item);
+      rootptr = BTree<T>::Ref create(item);
 
   }
 
@@ -219,18 +219,6 @@ class BTree
           throw std::runtime_error("Wrong input format.");
 
       //TODO
-
-      /*if (is_empty())
-      {
-          in<<"[]";
-      }
-      else
-      {
-          in<<"[";
-          in<<" "<<item();
-          
-          in<<"]";
-      }*/
       
 
       return tree;
