@@ -338,12 +338,12 @@ class BTree
       else
       {
           out<<"[";
-          out<<out + item();
+          out<<item();
           out<<" ";
           fold(out);
-          out<<out + " ";
+          out<<" ";
           fold(out);
-          out<<out + "]";
+          out<<"]";
       }
       
 
