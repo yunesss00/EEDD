@@ -220,6 +220,22 @@ class BTree
 
       //TODO
       
+      std::string aux = token.substr(token.find(' ')+1);
+
+
+      if (token == "[]")
+      {
+          return tree;
+      }
+
+      if (aux[0] != '[' or aux[aux.size()-1] != ']'){
+
+         throw std::runtime_error("Worng input format.");
+
+      }
+      
+      
+      
 
       return tree;
   }
@@ -325,7 +341,7 @@ class BTree
       }
       else
       {
-          out<<"[";
+          out<<"[ ";
           out<<item();
           out<<" ";
           fold(out);
