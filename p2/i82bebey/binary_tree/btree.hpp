@@ -230,7 +230,8 @@ class BTree
 
       if (aux[0] != '[' or aux[aux.size()-1] != ']'){
 
-         throw std::runtime_error("Worng input format.");
+         throw std::runtime_error("Wrong input format.");
+
 
       }
       
