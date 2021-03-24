@@ -223,7 +223,7 @@ class BTree
       std::string aux = token.substr(token.find(' ')+1); //imput complete
       T val;
       int move;
-      int nextSpace;
+      int nextSpace = currentSpace;
 
 
       if (token == "[]")
@@ -236,8 +236,8 @@ class BTree
       }
       else
       {
-         currentSpace = aux.find(' ');
-         val = aux.substr(currentSpace,aux.find(' '));
+         nextSpace = aux.find(' ');
+         val = aux.substr(nextSpace,aux.find(' '));
          //nextSpace = 
 
          //move = nextSpace - currentSpace;
