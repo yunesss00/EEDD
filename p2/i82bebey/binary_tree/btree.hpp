@@ -226,6 +226,7 @@ class BTree
       std::string spacePosition_1;
       std::string spacePosition_2;
       T val;
+      int move;
 
 
       if (token == "[]")
@@ -243,7 +244,8 @@ class BTree
 
          spacePosition_2 = auxAllNodes.find(' '); //pos of the second space
 
-         val = (T)auxAllNodes.substr(spacePosition_1,spacePosition_2-spacePosition_1);
+         move = spacePosition_2-spacePosition_1;
+         val = (T)auxAllNodes.substr(spacePosition_1,move);
          //std::istringstream translater(val);         
          rootptr->set_item(val);        
 
