@@ -248,14 +248,14 @@ class BTree
          val = (T)auxAllNodes.substr(spacePosition_1,move);
          std::istringstream translater(val);         
          translater>>val;
-         rootptr->tree->set_item(val);        
+         tree->rootptr->set_item(val);        
 
-         while (rootptr->tree->has_left() == true)
+         while (tree->rootptr->has_left() == true)
          {
              create(auxAllNodes);
          }
 
-         while (rootptr->tree->has_right() == true)
+         while (tree->rootptr->has_right() == true)
          {
              create(auxAllNodes);
          }
