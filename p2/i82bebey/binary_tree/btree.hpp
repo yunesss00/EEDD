@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sstream>
 
+int currentSpace = 0;
+
 /** @brief a BTree's Node.*/
 template <class T>
 class BTNode
@@ -470,7 +472,7 @@ protected:
 
   //TODO
   typename BTNode<T>::Ref rootptr;
-  int currentSpace = 0;
+  //int currentSpace = 0;
 
 };
 #endif
