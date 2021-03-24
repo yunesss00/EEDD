@@ -250,17 +250,19 @@ class BTree
          translater>>val;
          tree->rootptr->set_item(val);        
 
-         while (tree->rootptr->has_left() == true)
+         auxAllNodes = auxAllNodes.substr(spacePosition_2); //new imput
+
+
+         if (tree->rootptr->has_left() == true)
          {
-             BTree<T>::Ref create((istream &auxAllNodes);
+             BTree<T>::Ref create(in);
          }
 
-         while (tree->rootptr->has_right() == true)
+         if (tree->rootptr->has_right() == true)
          {   
-             BTree<T>::Ref create(istream &auxAllNodes);
+             BTree<T>::Ref create(in);
          }
          
-         auxAllNodes = auxAllNodes.substr(spacePosition_2); //new imput
 
       }
       
