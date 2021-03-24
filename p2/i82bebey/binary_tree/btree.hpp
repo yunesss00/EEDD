@@ -238,7 +238,7 @@ class BTree
       {
          currentSpace = aux.find(' ');
          val = aux.substr(currentSpace,aux.find(' '));
-         nextSpace = 
+         //nextSpace = 
 
          //move = nextSpace - currentSpace;
          //val = aux.substr(currentSpace,move);
