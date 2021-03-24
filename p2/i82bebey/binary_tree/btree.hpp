@@ -238,10 +238,10 @@ class BTree
       }
       else
       {
-         spacePosition_1 = std::auxAllNodes.find(' '); //pos of the first space
+         spacePosition_1 = auxAllNodes.find(' '); //pos of the first space
          auxAllNodes_2 = auxAllNodes.substr(spacePosition_2);
 
-         spacePosition_2 = std::auxAllNodes.find(' '); //pos of the second space
+         spacePosition_2 = auxAllNodes.find(' '); //pos of the second space
 
          val = (T)auxAllNodes.substr(spacePosition_1,spacePosition_2-spacePosition_1);
          //std::istringstream translater(val);         
