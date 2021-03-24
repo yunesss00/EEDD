@@ -255,12 +255,12 @@ class BTree
 
          if (tree->rootptr->has_left() == true)
          {
-             BTree<T>::Ref create(in);
+             create(in);
          }
 
          if (tree->rootptr->has_right() == true)
          {   
-             BTree<T>::Ref create(in);
+             create(in);
          }
          
 
