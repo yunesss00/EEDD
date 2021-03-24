@@ -244,10 +244,20 @@ class BTree
          spacePosition_2 = str::auxAllNodes.find(' '); //pos of the second space
 
          val = (T)auxAllNodes.substr(spacePosition_1,spacePosition_2-spacePosition_1);
+         //std::istringstream translater(val);         
          rootptr->set_item(val);        
 
+         while (has_left() == true)
+         {
+             create(auxAllNodes);
+         }
 
-         auxAllNodes = auxAllNodes.substr(spacePosition_2);
+         while (has_right() == true)
+         {
+             create(auxAllNodes);
+         }
+         
+         auxAllNodes = auxAllNodes.substr(spacePosition_2); //new imput
 
       }
       
