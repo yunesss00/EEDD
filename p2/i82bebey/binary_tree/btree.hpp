@@ -248,12 +248,12 @@ class BTree
 
          if (tree->rootptr->has_left() == true)
          {
-             set_left(create(in));
+             tree->set_left(create(in));
          }
 
          if (tree->rootptr->has_right() == true)
          {   
-             set_right(create(in));
+             tree->set_right(create(in));
          }
          
 
