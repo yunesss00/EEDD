@@ -220,56 +220,45 @@ class BTree
 
       //TODO
       
-      std::string auxAllNodes = token.substr(token.find(' ')+1);
-      std::string auxAllNodes_2 = auxAllNodes;
-
-      int spacePosition_1;
-      int spacePosition_2;
-      std::string val;
+      std::string aux = token.substr(token.find(' ')+1); //imput complete
+      T val;
       int move;
+      int nextSpace;
 
 
       if (token == "[]")
       {
           return tree;
       }
-      else if (auxAllNodes[0] != '[' or auxAllNodes[auxAllNodes.size()-1] != ']')
+      else if (aux[0] != '[' or aux[aux.size()-1] != ']')
       {
          throw std::runtime_error("Wrong input format.");
       }
       else
       {
-         spacePosition_1 = (int)auxAllNodes.find(' '); //pos of the first space
-         auxAllNodes_2 = auxAllNodes.substr(spacePosition_2);
+         currentSpace = aux.find(' ');
+         val = aux.substr(currentSpace,aux.find(' '));
+         nextSpace = 
 
-         spacePosition_2 = (int)auxAllNodes.find(' '); //pos of the second space
-
-         move = spacePosition_2 - spacePosition_1;
-         val = auxAllNodes.substr(spacePosition_1,move);
+         //move = nextSpace - currentSpace;
+         //val = aux.substr(currentSpace,move);
          std::istringstream translater(val);         
          translater>>val;
          tree->set_item(val);        
 
-         auxAllNodes = auxAllNodes.substr(spacePosition_2); //new imput
-
-
          if (tree->rootptr->has_left() == true)
          {
-             create(in);
+             set_left(create(in));
          }
 
          if (tree->rootptr->has_right() == true)
          {   
-             create(in);
+             set_right(create(in));
          }
          
 
       }
       
-      
-      
-      
-
       return tree;
   }
 
@@ -480,6 +469,7 @@ protected:
 
   //TODO
   typename BTNode<T>::Ref rootptr;
+  int currentSpace = 0;
 
 };
 #endif
