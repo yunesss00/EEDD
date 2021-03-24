@@ -240,21 +240,21 @@ class BTree
       else
       {
          spacePosition_1 = auxAllNodes.find(' '); //pos of the first space
-         auxAllNodes_2 = auxAllNodes.substr(spacePosition_2);
+         auxAllNodes_2 = auxAllNodes.substr((int)spacePosition_2);
 
          spacePosition_2 = auxAllNodes.find(' '); //pos of the second space
 
          move = (int)spacePosition_2-(int)spacePosition_1;
-         val = (T)auxAllNodes.substr(spacePosition_1,move);
+         val = (T)auxAllNodes.substr((int)spacePosition_1,move);
          //std::istringstream translater(val);         
          rootptr->set_item(val);        
 
-         while (has_left() == true)
+         while (rootptr->has_left() == true)
          {
              create(auxAllNodes);
          }
 
-         while (has_right() == true)
+         while (rootptr->has_right() == true)
          {
              create(auxAllNodes);
          }
