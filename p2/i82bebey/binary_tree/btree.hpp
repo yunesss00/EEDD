@@ -252,12 +252,12 @@ class BTree
 
          while (tree->rootptr->has_left() == true)
          {
-             BTree<T>::Ref create(auxAllNodes);
+             BTree<T>::Ref create((istream &auxAllNodes);
          }
 
          while (tree->rootptr->has_right() == true)
          {   
-             BTree<T>::Ref create(auxAllNodes);
+             BTree<T>::Ref create(istream &auxAllNodes);
          }
          
          auxAllNodes = auxAllNodes.substr(spacePosition_2); //new imput
