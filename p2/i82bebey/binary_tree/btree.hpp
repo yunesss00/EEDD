@@ -223,8 +223,8 @@ class BTree
       std::string auxAllNodes = token.substr(token.find(' ')+1);
       std::string auxAllNodes_2 = auxAllNodes;
 
-      std::string spacePosition_1;
-      std::string spacePosition_2;
+      int spacePosition_1;
+      int spacePosition_2;
       T val;
       int move;
 
@@ -239,13 +239,13 @@ class BTree
       }
       else
       {
-         spacePosition_1 = auxAllNodes.find(' '); //pos of the first space
-         auxAllNodes_2 = auxAllNodes.substr((int)spacePosition_2);
+         spacePosition_1 = (int)auxAllNodes.find(' '); //pos of the first space
+         auxAllNodes_2 = auxAllNodes.substr(spacePosition_2);
 
-         spacePosition_2 = auxAllNodes.find(' '); //pos of the second space
+         spacePosition_2 = (int)auxAllNodes.find(' '); //pos of the second space
 
-         move = (int)spacePosition_2-(int)spacePosition_1;
-         val = (T)auxAllNodes.substr((int)spacePosition_1,move);
+         move = spacePosition_2 - spacePosition_1;
+         val = (T)auxAllNodes.substr(spacePosition_1,move);
          //std::istringstream translater(val);         
          rootptr->set_item(val);        
 
