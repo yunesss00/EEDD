@@ -225,7 +225,7 @@ class BTree
 
       int spacePosition_1;
       int spacePosition_2;
-      T val;
+      std::string val;
       int move;
 
 
@@ -245,7 +245,7 @@ class BTree
          spacePosition_2 = (int)auxAllNodes.find(' '); //pos of the second space
 
          move = spacePosition_2 - spacePosition_1;
-         val = (T)auxAllNodes.substr(spacePosition_1,move);
+         val = auxAllNodes.substr(spacePosition_1,move);
          std::istringstream translater(val);         
          translater>>val;
          tree->rootptr->set_item(val);        
