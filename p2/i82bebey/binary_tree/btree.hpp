@@ -248,7 +248,7 @@ class BTree
          val = auxAllNodes.substr(spacePosition_1,move);
          std::istringstream translater(val);         
          translater>>val;
-         tree->rootptr->set_item(val);        
+         rootptr->set_item(val);        
 
          auxAllNodes = auxAllNodes.substr(spacePosition_2); //new imput
 
