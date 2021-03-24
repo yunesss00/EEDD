@@ -221,7 +221,7 @@ class BTree
       //TODO
       
       std::string aux = token.substr(token.find(' ')+1); //imput complete
-      T val;
+      std::string val;
       int move;
       int nextSpace = currentSpace;
 
@@ -236,12 +236,13 @@ class BTree
       }
       else
       {
-         nextSpace = aux.find(' ');
-         val = aux.substr(nextSpace,aux.find(' '));
+         currentSpace = aux.find(' ');
+         move = aux.substr(currentSpace,aux.find(' ')) - currentSpace;
+
+         //val = aux.substr(currentSpace,aux.find(' '));
          //nextSpace = 
 
-         //move = nextSpace - currentSpace;
-         //val = aux.substr(currentSpace,move);
+         val = aux.substr(currentSpace,move);
          std::istringstream translater(val);         
          translater>>val;
          tree->set_item(val);        
