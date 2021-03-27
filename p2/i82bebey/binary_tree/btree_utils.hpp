@@ -33,12 +33,12 @@ int compute_height (typename BTree<T>::Ref t)
         if (ret_val < aux) ret_val = aux;
         
     }
-    /*else if (t!=is_empty() && t->has_left() == false && t->has_right() == false) //t no childs
+    else if (t!=is_empty() && t->has_left() == false && t->has_right() == false) //t no childs
     {
         aux++;
         if (ret_val < aux) ret_val = aux;
 
-    }*/
+    }
     else
     {
         if (t->has_left() == true)
