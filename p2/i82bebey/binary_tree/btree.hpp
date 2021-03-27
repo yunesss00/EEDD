@@ -319,7 +319,7 @@ class BTree
       BTree<T>::Ref r_subtree;
 
       //TODO
-      if (r_subtree->has_right() == false) 
+      if (r_subtree->rootptr->has_right() == false) 
       {
           r_subtree = nullptr;
       }
