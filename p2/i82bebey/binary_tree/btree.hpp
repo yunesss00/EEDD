@@ -7,7 +7,6 @@
 #include <iostream>
 #include <sstream>
 
-int currentSpace = 0;
 
 /** @brief a BTree's Node.*/
 template <class T>
@@ -223,9 +222,7 @@ class BTree
       //TODO
       
       std::string aux = token.substr(token.find(' ')+1); //imput complete
-      std::string val;
-      int move;
-      int nextSpace = currentSpace;
+      
 
 
       if (token == "[]")
@@ -237,17 +234,10 @@ class BTree
          throw std::runtime_error("Wrong input format.");
       }
       else
-      {
-         currentSpace = aux.find(' ');
-         move = (int)aux.substr(currentSpace,aux.find(' ')) - currentSpace;
+      {    
+         std::istringstream translater(token);
+    
 
-         //val = aux.substr(currentSpace,aux.find(' '));
-         //nextSpace = 
-
-         val = aux.substr(currentSpace,move);
-         std::istringstream translater(val);         
-         translater>>val;
-         tree->set_item(val);        
 
          if (tree->rootptr->has_left() == true)
          {
@@ -472,7 +462,6 @@ protected:
 
   //TODO
   typename BTNode<T>::Ref rootptr;
-  //int currentSpace = 0;
 
 };
 #endif
