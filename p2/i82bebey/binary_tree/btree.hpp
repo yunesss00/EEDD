@@ -236,7 +236,7 @@ class BTree
       else
       {    
          std::istringstream translater(token);
-    
+         
 
 
          if (tree->rootptr->has_left() == true)
