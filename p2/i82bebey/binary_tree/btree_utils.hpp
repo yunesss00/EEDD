@@ -45,7 +45,7 @@ int compute_height (typename BTree<T>::Ref t)
         //{
             aux++;
             if (ret_val < aux) ret_val = aux;
-            return compute_height(BTree<T>::left());
+            return compute_height(left());
             
         //}
 
@@ -53,7 +53,7 @@ int compute_height (typename BTree<T>::Ref t)
         //{
             aux++;
             if (ret_val < aux) ret_val = aux;
-            return compute_height(BTree<T>::Ref t->right());
+            return compute_height(right());
         //}
         
     }
