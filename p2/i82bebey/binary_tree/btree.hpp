@@ -285,7 +285,7 @@ class BTree
 
   /**
    * @brief Get the left subtree.
-   * @return a reference to the left subtree.
+   * @return a reference to the left subtFree.
    * @pre !is_empty()
    */
   typename BTree<T>::Ref left() const
@@ -294,7 +294,7 @@ class BTree
       BTree<T>::Ref l_subtree;
 
       //TODO
-      if (l_subtree->has_left() == false) 
+      if (l_subtree->rootptr->has_left() == false) 
       {
           l_subtree = nullptr;
       }
