@@ -44,8 +44,9 @@ int compute_height (typename BTree<T>::Ref t)
         //if (t->has_left() == true)
         //{
             aux++;
+            aux = compute_height(left());
             if (ret_val < aux) ret_val = aux;
-            compute_height(left());
+            
         //}
 
         //if (has_right() == true)
