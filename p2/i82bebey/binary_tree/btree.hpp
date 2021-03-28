@@ -261,27 +261,15 @@ class BTree
 
       in>>token;
 
-      if (token == "[]")
-      {
-          tree->rootptr->set_left(nullptr);
-      }
-      else
-      {
-          auto leftTree = BTree<T>::create(in);
-          tree->set_left(leftTree);
-      }    
+        auto leftTree = BTree<T>::create(in);
+        tree->set_left(leftTree);    
 
       in>>token;
 
-      if (token == "[]")
-      {
-          tree->rootptr->set_right(nullptr);
-      }
-      else
-      {
-          auto rightTree = BTree<T>::create(in);
-          tree->set_right(rightTree);
-      }
+      
+        auto rightTree = BTree<T>::create(in);
+        tree->set_right(rightTree);
+      
       
        in>>trash; 
 
