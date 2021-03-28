@@ -219,7 +219,8 @@ class BTree
       if (!in)
           throw std::runtime_error("Wrong input format.");
 
-      //TODO      
+      //TODO     
+      char trash; 
       in>>token;
       if (token == "[]") return tree;
 
@@ -258,6 +259,7 @@ class BTree
           tree->set_right(rightTree);
       }
       
+       in>>trash; 
 
       return tree;
   }
