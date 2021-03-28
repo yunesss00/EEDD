@@ -47,6 +47,30 @@ public:
         return std::make_shared<BTNode<T>> (it, left, right);
     }
 
+    std::ostream& fold(std::ostream& out, BTNode<T>::Ref next) const{
+
+    	if (next == nullptr)
+    	{
+    		out<<"[]";
+
+    	}else{
+
+    		out<<"[ ";
+    		out<<data;
+    		out<<' ';
+
+
+    		fold(out, leftptrNode);
+    		out<<' ';
+    		fold(out, rightptrNode);
+    		out<<" ]";
+
+    	}
+
+    	return out;
+    }
+    
+
     /** @brief Destroy a BTNode. **/
     ~BTNode()
     {}
@@ -359,7 +383,7 @@ class BTree
   std::ostream& fold(std::ostream& out) const
   {
       //TODO
-      if (is_empty() == true )
+      /*if (is_empty() == true )
       {
           out<<"[]";
       }
@@ -372,8 +396,8 @@ class BTree
           out<<" ";
           fold(out);
           out<<"]";
-      }
-      
+      }*/
+      rootptr->fold(out, rootptr);
 
       //
       return out;
