@@ -47,7 +47,7 @@ public:
         return std::make_shared<BTNode<T>> (it, left, right);
     }
 
-    /*std::ostream& fold(std::ostream& out, BTNode<T>::Ref next) const{
+    std::ostream& fold(std::ostream& out, BTNode<T>::Ref next) const{
 
     	if (next == nullptr)
     	{
@@ -56,19 +56,19 @@ public:
     	}else{
 
     		out<<"[ ";
-    		out<<data;
+    		out<<next->data;
     		out<<' ';
 
 
-    		fold(out, leftptrNode);
+    		fold(out, next->leftptrNode);
     		out<<' ';
-    		fold(out, rightptrNode);
+    		fold(out, next->rightptrNode);
     		out<<" ]";
 
     	}
 
     	return out;
-    }*/
+    }
     
 
     /** @brief Destroy a BTNode. **/
@@ -259,13 +259,12 @@ class BTree
 
       if (!in) throw std::runtime_error("Wrong input format.");  
 
-      in>>token;
+      //in>>token;
 
         auto leftTree = BTree<T>::create(in);
         tree->set_left(leftTree);    
 
-      in>>token;
-
+      //in>>token;
       
         auto rightTree = BTree<T>::create(in);
         tree->set_right(rightTree);
@@ -312,7 +311,7 @@ class BTree
   typename BTree<T>::Ref left() const
   {
       assert(!is_empty());
-      BTree<T>::Ref l_subtree;
+      auto l_subtree = BTree<T>::create();
 
       //TODO
       if (l_subtree->rootptr->has_left() == false) 
@@ -337,7 +336,7 @@ class BTree
   typename BTree<T>::Ref right() const
   {
       assert(!is_empty());
-      BTree<T>::Ref r_subtree;
+      auto r_subtree = BTree<T>::create();
 
       //TODO
       if (r_subtree->rootptr->has_right() == false) 
@@ -371,26 +370,27 @@ class BTree
   std::ostream& fold(std::ostream& out) const
   {
       //TODO
-      auto auxLeftTree =BTree<T>::create();
-      auto auxRightTree =BTree<T>::create();
+      
 
-      if (is_empty() == true )
+     /* if (is_empty() == true )
       {
           out<<"[]";
       }
       else
       {
           out<<"[ ";
-          out<<item();
+          out<<rootptr->item();
           out<<" ";
-          auxLeftTree = left();
+
+          auto auxLeftTree =BTree<T>::left();
+          auto auxRightTree =BTree<T>::right();
+
           auxLeftTree->fold(out);
           out<<" ";
-          auxRightTree = right();
           auxRightTree->fold(out);
           out<<"]";
-      }
-      //rootptr->fold(out, rootptr);
+      }*/
+      rootptr->fold(out, rootptr);
 
       //
       return out;
