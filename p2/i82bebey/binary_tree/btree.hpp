@@ -314,7 +314,7 @@ class BTree
       auto l_subtree = BTree<T>::create();
 
       //TODO
-      l_subtree->rootptr = rootptr->next();
+      l_subtree->rootptr = rootptr->left();
       //
 
       return l_subtree;
@@ -331,7 +331,7 @@ class BTree
       auto r_subtree = BTree<T>::create();
 
       //TODO
-      r_subtree->rootptr = rootptr->next();
+      r_subtree->rootptr = rootptr->right();
       //
 
       return r_subtree;
