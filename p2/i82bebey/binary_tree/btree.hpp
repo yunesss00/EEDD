@@ -215,13 +215,11 @@ class BTree
   {
       auto tree = BTree<T>::create();
       std::string token;
-      in >> token;
+      //in >> token;
       if (!in)
           throw std::runtime_error("Wrong input format.");
 
-      //TODO
-      char trash;
-      
+      //TODO      
       in>>token;
       if (token == "[]") return tree;
 
