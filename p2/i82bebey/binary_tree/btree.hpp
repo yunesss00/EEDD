@@ -220,38 +220,47 @@ class BTree
           throw std::runtime_error("Wrong input format.");
 
       //TODO
+      char trash;
       
-      std::string aux = token.substr(token.find(' ')+1); //imput complete
-      
+      in>>token;
+      if (token == "[]") return tree;
 
+      if (!in) throw std::runtime_error("Wrong input format.");
+      
+      in>>token;
+      std::istringstream translater(token);
+
+      T item;
+      translater>>item;
+      tree->create_root(item);
+
+      if (!in) throw std::runtime_error("Wrong input format.");  
+
+      in>>token;
 
       if (token == "[]")
       {
-          return tree;
-      }
-      else if (aux[0] != '[' or aux[aux.size()-1] != ']')
-      {
-         throw std::runtime_error("Wrong input format.");
+          tree->rootptr->set_left(nullptr);
       }
       else
-      {    
-         std::istringstream translater(token);
-         
+      {
+          auto leftTree = BTree<T>::create(in);
+          tree->set_left(leftTree)
+      }    
 
+      in>>token;
 
-         if (tree->rootptr->has_left() == true)
-         {
-             tree->set_left(create(in));
-         }
-
-         if (tree->rootptr->has_right() == true)
-         {   
-             tree->set_right(create(in));
-         }
-         
-
+      if (token == "[]")
+      {
+          tree->rootptr->set_right(nullptr);
+      }
+      else
+      {
+          auto rightTree = BTree<T>::create(in);
+          tree->set_right(rightTree)
       }
       
+
       return tree;
   }
 
@@ -357,7 +366,7 @@ class BTree
       else
       {
           out<<"[ ";
-          out<<rootptr->item();
+          out<<item();
           out<<" ";
           fold(out);
           out<<" ";
@@ -395,8 +404,9 @@ class BTree
   void create_root(T const& item)
   {
       //TODO
-      rootptr = nullptr;
-      rootptr->set_item(item);
+      //rootptr = nullptr;
+      //rootptr->set_item(item);
+      rootptr = BTNode<T>::create(item);
       assert(!is_empty());
   }
 

@@ -25,7 +25,7 @@ int compute_height (typename BTree<T>::Ref t)
     int ret_val = -1;
 
     //TODO
-    int aux = -1;
+    /*int aux = -1;
 
     if (t->is_empty())
     {
@@ -39,7 +39,7 @@ int compute_height (typename BTree<T>::Ref t)
         if (ret_val < aux) ret_val = aux;
 
     }*/
-    else
+    /*else
     {
         //if (t->has_left() == true)
         //{
@@ -56,7 +56,7 @@ int compute_height (typename BTree<T>::Ref t)
             return compute_height(right());
         //}
         
-    }
+    }*/
     
     
     return ret_val;
