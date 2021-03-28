@@ -383,8 +383,8 @@ class BTree
   std::ostream& fold(std::ostream& out) const
   {
       //TODO
-      auto auxLeftTree =BTree<T>::Ref create();
-      auto auxRightTree =BTree<T>::Ref create();
+      auto auxLeftTree =BTree<T>::create();
+      auto auxRightTree =BTree<T>::create();
 
       if (is_empty() == true )
       {
