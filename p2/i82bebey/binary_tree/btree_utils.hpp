@@ -68,12 +68,12 @@ size_t compute_size (typename BTree<T>::Ref t)
 
     if (t->left() != nullptr)
     {
-        compute_size<T>(t->left());
+        ret_val = ret_val + compute_size<T>(t->left());
     }
 
     if (t->right() != nullptr)
     {
-        compute_size<T>(t->right());
+        ret_val = ret_val + compute_size<T>(t->right());
     }
     
     
