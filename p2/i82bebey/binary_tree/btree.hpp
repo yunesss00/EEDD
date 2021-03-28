@@ -245,7 +245,7 @@ class BTree
       else
       {
           auto leftTree = BTree<T>::create(in);
-          tree->set_left(leftTree)
+          tree->set_left(leftTree);
       }    
 
       in>>token;
@@ -257,7 +257,7 @@ class BTree
       else
       {
           auto rightTree = BTree<T>::create(in);
-          tree->set_right(rightTree)
+          tree->set_right(rightTree);
       }
       
 
