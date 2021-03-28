@@ -314,15 +314,7 @@ class BTree
       auto l_subtree = BTree<T>::create();
 
       //TODO
-      if (l_subtree->rootptr->has_left() == false) 
-      {
-          l_subtree = nullptr;
-      }
-      else
-      {
-          l_subtree = left();
-      }
-
+      l_subtree->rootptr = rootptr->next();
       //
 
       return l_subtree;
@@ -339,14 +331,7 @@ class BTree
       auto r_subtree = BTree<T>::create();
 
       //TODO
-      if (r_subtree->rootptr->has_right() == false) 
-      {
-          r_subtree = nullptr;
-      }
-      else
-      {
-          r_subtree = right();
-      }
+      r_subtree->rootptr = rootptr->next();
       //
 
       return r_subtree;
