@@ -215,12 +215,12 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
 
     if (tree->right()->item() >= tree->item())
     {
-        ret_val == false;
         return ret_val;
     }
     else
     {
-        return false;
+        ret_val == false;
+        return ret_val;
     }
     
     //
