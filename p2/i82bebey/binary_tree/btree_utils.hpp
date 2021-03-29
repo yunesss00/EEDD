@@ -25,19 +25,21 @@ int compute_height (typename BTree<T>::Ref t)
     int ret_val = 0;
 
     //TODO
-    /*if (t->is_empty())
+    if (t->is_empty()) return -1;
+    
+    auto leftTreeHeight = compute_height<T>(t->left());
+    auto rightTreeHeight = compute_height<T>(t->right());
+
+    if (leftTreeHeight >= rightTreeHeight)
     {
-        return -1;
+        ret_val = 1 + leftTreeHeight;
+        return ret_val;
     }
     else
     {
-
-            compute_height<T>(t->left());
-
-            compute_height<T>(t->right());
-        
-    }*/
-    
+        retval = 1 + rightTreeHeight;
+        return ret_val;
+    }
     
     return ret_val;
 }
