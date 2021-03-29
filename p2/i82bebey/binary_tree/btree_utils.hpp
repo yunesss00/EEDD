@@ -237,7 +237,27 @@ bool has_in_order(typename BTree<T>::Ref tree, T const& v)
     bool ret_val = false;
 
     //TODO
-
+    if (tree->is_empty())
+    {
+        return false;
+    }
+    else if (v == tree->item())
+    {
+        return true;
+    }
+    else
+    {
+        if (v > tree->item())
+        {
+            has_in_order<T>(tree->right());
+        }
+        else
+        {
+            has_in_order<T>(tree->left());
+        }
+        
+    }
+    
 
     //
 
