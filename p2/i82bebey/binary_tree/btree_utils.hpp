@@ -25,7 +25,7 @@ int compute_height (typename BTree<T>::Ref t)
     int ret_val = 0;
 
     //TODO
-    if (t->is_empty())
+    /*if (t->is_empty())
     {
         return -1;
     }
@@ -36,7 +36,7 @@ int compute_height (typename BTree<T>::Ref t)
 
             compute_height<T>(t->right());
         
-    }
+    }*/
     
     
     return ret_val;
@@ -59,7 +59,9 @@ size_t compute_size (typename BTree<T>::Ref t)
 
 
     //TODO
-    if (!t->is_empty()) ret_val++;
+    if (t->is_empty()) return 0;
+    
+    ret_val++;
 
     if (t->left() != nullptr)
     {
