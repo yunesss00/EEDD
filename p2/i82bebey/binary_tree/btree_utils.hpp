@@ -75,10 +75,6 @@ size_t compute_size (typename BTree<T>::Ref t)
         ret_val = ret_val + compute_size<T>(t->right());
     }
     
-    
-
-
-
     assert(!t->is_empty() || ret_val==0);
     assert(t->is_empty() || ret_val>0);
     return ret_val;
@@ -205,8 +201,26 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
     bool ret_val = true;
 
     //TODO
+    if (tree->is_empty()) return ret_val;
 
+    if (tree->left()->item() <= tree->item())
+    {
+        return ret_val;
+    }
+    else
+    {
+        return false;
+    }
 
+    if (tree->right()->item() >= tree->item())
+    {
+        return ret_val;
+    }
+    else
+    {
+        return false;
+    }
+    
     //
 
     return ret_val;
