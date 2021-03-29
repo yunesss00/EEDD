@@ -201,28 +201,24 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
     bool ret_val = true;
 
     //TODO
-    if (tree->is_empty()) ret_val == true; return ret_val;
+    if (tree->is_empty()) return ret_val;
 
     if (tree->left()->item() <= tree->item())
     {
-        ret_val == true;
-        return ret_val;
+        ret_val = check_btree_in_order(tree->left());
     }
     else
     {
-        ret_val == false;
-        return ret_val;
+        return false;
     }
 
     if (tree->right()->item() >= tree->item())
     {
-        ret_val == true;
-        return ret_val;
+        ret_val = check_btree_in_order(tree->right());;
     }
     else
     {
-        ret_val == false;
-        return ret_val;
+        return false;
     }
     
     //
