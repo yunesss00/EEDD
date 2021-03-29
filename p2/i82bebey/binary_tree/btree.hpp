@@ -190,6 +190,7 @@ class BTree
     {
         //TODO
         rootptr = nullptr;
+        assert(is_empty());
 
     }
 
@@ -199,7 +200,7 @@ class BTree
   BTree (const T& item)
   {
       //TODO
-      rootptr = BTree<T>::create(item);
+      rootptr = BTNode<T>::create(item);
 
   }
 
