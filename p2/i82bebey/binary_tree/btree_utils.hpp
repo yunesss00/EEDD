@@ -202,6 +202,8 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
 
     //TODO
     if (tree->is_empty()) return ret_val;
+    
+    if (tree->left()->is_empty()) return ret_val;
 
     if (tree->left()->item() <= tree->item())
     {
@@ -211,6 +213,8 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
     {
         return false;
     }
+
+    if (tree->right()->is_empty()) return ret_val;
 
     if (tree->right()->item() >= tree->item())
     {
