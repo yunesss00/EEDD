@@ -205,7 +205,7 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
 
     if (tree->left()->item() <= tree->item())
     {
-        ret_val = check_btree_in_order(tree->left());
+        ret_val = check_btree_in_order<T>(tree->left());
     }
     else
     {
@@ -214,7 +214,7 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
 
     if (tree->right()->item() >= tree->item())
     {
-        ret_val = check_btree_in_order(tree->right());;
+        ret_val = check_btree_in_order<T>(tree->right());;
     }
     else
     {
