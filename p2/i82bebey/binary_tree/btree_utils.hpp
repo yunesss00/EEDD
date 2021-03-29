@@ -37,7 +37,7 @@ int compute_height (typename BTree<T>::Ref t)
     }
     else
     {
-        retval = 1 + rightTreeHeight;
+        ret_val = 1 + rightTreeHeight;
         return ret_val;
     }
     
