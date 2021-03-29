@@ -229,6 +229,51 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
     return ret_val;
 }
 
+template<class T>
+T  minValue(typename BTree<T>::Ref const& tree){
+
+T res;
+
+    if (tree->is_empty())
+
+        return 99999;
+  
+    // Return maximum of 3 values:
+    // 1) Root's data 2) Max in Left Subtree
+    // 3) Max in right subtree
+    res = tree->item();
+    T lres = minValue<T>(tree->left());
+    T rres = minValue<T>(tree->right());
+    if (lres < res)
+        res = lres;
+    if (rres < res)
+        res = rres;
+
+    return res;
+    
+
+}
+
+template<class T>
+T  maxValue(typename BTree<T>::Ref const& tree){
+
+    if (tree->is_empty())
+
+        return -99999;
+  
+    T res = tree->item();
+    T lres = maxValue<T>(tree->left());
+    T rres = maxValue<T>(tree->right());
+    if (lres > res)
+        res = lres;
+    if (rres > res)
+        res = rres;
+
+    return res;
+
+}
+
+
 /**
  * @brief Search a item into the tree.
  *
@@ -246,27 +291,38 @@ bool has_in_order(typename BTree<T>::Ref tree, T const& v)
     bool ret_val = true;
 
     //TODO
+bool ret_val = true;
+
+    //TODO
+
+    
     if (tree->is_empty())
+    {
+        return true;
+
+    }
+
+
+
+    if (tree->right()->is_empty() == false && minValue<T>(tree->right()) < tree->item()){
+
+        return false;
+
+    }
+    
+    if (tree->left()->is_empty() == false && maxValue<T>(tree->left()) > tree->item())
     {
         return false;
     }
-    else
-    {
-        if (v > tree->item())
-        {
-            return has_in_order<T>(tree->right(),v);
-        }
-        else if (v < tree->item())
-        {
-            return has_in_order<T>(tree->left(),v);
-        }
-        
+
+    if (check_btree_in_order<T>(tree->left()) == false || check_btree_in_order<T>(tree->right()) == false){
+
+        return false;
+
     }
-    
+   
 
-    //
-
-    return ret_val;
+    return true;
 }
 
 /**
