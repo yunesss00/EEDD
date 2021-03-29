@@ -3,6 +3,8 @@ project (check_brackets)
 
 enable_language(CXX)
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "-g")
+
 
 add_executable(test_slist test_slist.cpp slist.hpp)
 add_executable(test_stack test_stack.cpp stack.hpp)

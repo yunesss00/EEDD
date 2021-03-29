@@ -186,49 +186,6 @@ breadth_first_process(typename BTree<T>::Ref tree, Processor& p)
     return ret_val;
 }
 
-/**
- * @brief Check is a binary tree is in order.
- * A binary tree is in order whether it is the empty tree or
- * when for each subtree, the root node is greater than all its proper left
- * descendants and less than all its proper right descendants.
- *
- * @param tree is the tree to be checked.
- * @return true if the input tree is in order.
- */
-template<class T>
-bool check_btree_in_order(typename BTree<T>::Ref const& tree)
-{
-    bool ret_val = true;
-
-    //TODO
-    if (tree->is_empty()) return ret_val;
-
-    if (tree->left()->is_empty() && tree->right()->is_empty())
-    {
-        return true;
-    }
-    else
-    {
-        if (!tree->left()->is_empty() && tree->left()->item() > tree->item()) return false;
-        else if (!tree->right()->is_empty() && tree->right()->item() < tree->item()) return false;
-        if (!tree->left()->is_empty()) return check_btree_in_order<T>(tree->left()); 
-        if (!tree->left()->is_empty()) return check_btree_in_order<T>(tree->right());
-    }
-   /* if (tree->left()->is_empty() && tree->right()->is_empty())
-    {
-        return true;
-
-    }
-
-    if (!tree->right()->is_empty() && tree->right()->item() < tree->item()) return false;
-    if (!tree->left()->is_empty() && tree->left()->item() > tree->item()) return false;
-    if (!tree->left()->is_empty() && !check_btree_in_order<T>(tree->left())) return false;
-    if (!tree->right()->is_empty() && !check_btree_in_order<T>(tree->right())) return false;*/
-    //
-
-    return ret_val;
-}
-
 template<class T>
 T  minValue(typename BTree<T>::Ref const& tree){
 
@@ -270,32 +227,42 @@ T  maxValue(typename BTree<T>::Ref const& tree){
         res = rres;
 
     return res;
+    
+
+
 
 }
 
 
 /**
- * @brief Search a item into the tree.
+ * @brief Check is a binary tree is in order.
+ * A binary tree is in order whether it is the empty tree or
+ * when for each subtree, the root node is greater than all its proper left
+ * descendants and less than all its proper right descendants.
  *
- * The input tree must be in order, a optimized search process can be used.
- *
- * @param tree is a in order binary tree.
- * @param v is the value to be found.
- * @pre check_btree_in_order(tree)
- * @return true if the value is in the tree.
+ * @param tree is the tree to be checked.
+ * @return true if the input tree is in order.
  */
 template<class T>
-bool has_in_order(typename BTree<T>::Ref tree, T const& v)
+bool check_btree_in_order(typename BTree<T>::Ref const& tree)
 {
-    assert(check_btree_in_order<T>(tree));
     bool ret_val = true;
 
     //TODO
-bool ret_val = true;
 
-    //TODO
+   /* if (tree->is_empty()) return ret_val;
 
-    
+    if (tree->left()->is_empty() && tree->right()->is_empty())
+    {
+        return true;
+    }
+    else
+    {
+        if (!tree->left()->is_empty() && tree->left()->item() > tree->item()) return false;
+        else if (!tree->right()->is_empty() && tree->right()->item() < tree->item()) return false;
+        if (!tree->left()->is_empty()) return check_btree_in_order<T>(tree->left()); 
+        if (!tree->left()->is_empty()) return check_btree_in_order<T>(tree->right());
+    }*/
     if (tree->is_empty())
     {
         return true;
@@ -323,6 +290,48 @@ bool ret_val = true;
    
 
     return true;
+    
+    return ret_val;
+}
+
+/**
+ * @brief Search a item into the tree.
+ *
+ * The input tree must be in order, a optimized search process can be used.
+ *
+ * @param tree is a in order binary tree.
+ * @param v is the value to be found.
+ * @pre check_btree_in_order(tree)
+ * @return true if the value is in the tree.
+ */
+template<class T>
+bool has_in_order(typename BTree<T>::Ref tree, T const& v)
+{
+    assert(check_btree_in_order<T>(tree));
+    bool ret_val = true;
+
+    //TODO
+    if (tree->is_empty())
+    {
+        return false;
+    }
+    else
+    {
+        if (v > tree->item())
+        {
+            return has_in_order<T>(tree->right(),v);
+        }
+        else if (v < tree->item())
+        {
+            return has_in_order<T>(tree->left(),v);
+        }
+        
+    }
+    
+
+    //
+
+    return ret_val;
 }
 
 /**
