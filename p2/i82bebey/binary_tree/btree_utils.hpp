@@ -249,11 +249,11 @@ bool has_in_order(typename BTree<T>::Ref tree, T const& v)
     {
         if (v > tree->item())
         {
-            has_in_order<T>(tree->right());
+            has_in_order(tree->right());
         }
         else
         {
-            has_in_order<T>(tree->left());
+            has_in_order(tree->left());
         }
         
     }
