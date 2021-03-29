@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "/home/yunesss_00/UNI/EEDD/p2/i82bebey/binary_tree/build/test_btree",
-            "args": ["tests_inorder/30"],
+            "args": ["tests_inorder/40"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

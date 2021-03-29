@@ -207,14 +207,23 @@ bool check_btree_in_order(typename BTree<T>::Ref const& tree)
     {
         return true;
     }
-    else if (tree->left()->is_empty() || tree->left()->item() > tree->item() || !check_btree_in_order<T>(tree->left()))
+    else
     {
-        return false;
+        if (!tree->left()->is_empty() && tree->left()->item() > tree->item()) return false;
+        else if (!tree->right()->is_empty() && tree->right()->item() < tree->item()) return false;
+        if (!tree->left()->is_empty()) return check_btree_in_order<T>(tree->left()); 
+        if (!tree->left()->is_empty()) return check_btree_in_order<T>(tree->right());
     }
-    else if (tree->right()->is_empty() || tree->right()->item() < tree->item() || !check_btree_in_order<T>(tree->right())) 
+   /* if (tree->left()->is_empty() && tree->right()->is_empty())
     {
-        return false;
+        return true;
+
     }
+
+    if (!tree->right()->is_empty() && tree->right()->item() < tree->item()) return false;
+    if (!tree->left()->is_empty() && tree->left()->item() > tree->item()) return false;
+    if (!tree->left()->is_empty() && !check_btree_in_order<T>(tree->left())) return false;
+    if (!tree->right()->is_empty() && !check_btree_in_order<T>(tree->right())) return false;*/
     //
 
     return ret_val;
@@ -234,26 +243,22 @@ template<class T>
 bool has_in_order(typename BTree<T>::Ref tree, T const& v)
 {
     assert(check_btree_in_order<T>(tree));
-    bool ret_val = false;
+    bool ret_val = true;
 
     //TODO
     if (tree->is_empty())
     {
         return false;
     }
-    else if (v == tree->item())
-    {
-        return true;
-    }
     else
     {
         if (v > tree->item())
         {
-            has_in_order<T>(tree->right(),v);
+            return has_in_order<T>(tree->right(),v);
         }
-        else
+        else if (v < tree->item())
         {
-            has_in_order<T>(tree->left(),v);
+            return has_in_order<T>(tree->left(),v);
         }
         
     }
@@ -281,11 +286,36 @@ void insert_in_order(typename BTree<T>::Ref tree, T const& v)
     assert(check_btree_in_order<T>(tree));
 
     //TODO
+    //if (!tree->is_empty()) tree->set_item(v);
+    
+    /*if ()
+    {
+        if (v < tree->item())
+        {
+            insert_in_order<T>(tree->left(),v);
+        }
+        else if (v > tree->item())
+        {
+            insert_in_order<T>(tree->right(),v);
+        }
+    }*/
+    if (!tree->is_empty() && tree->item() < v) 
+    {   
+		if (!tree->left()->is_empty()) insert_in_order<T>(tree->left(),v);			
+	}
+    else if (!tree->is_empty() && tree->item() > v) 
+    {   
+		if (!tree->right()->is_empty()) insert_in_order<T>(tree->right(),v);				
+	}
+    
 
+    
+
+       
 
     //
 
-    assert(has_in_order<T>(tree, v));
+    //assert(has_in_order<T>(tree, v));
 }
 
 
