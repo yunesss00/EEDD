@@ -240,17 +240,17 @@ void AVLTNode<T>::compute_height()
     {
         if (right_ != nullptr)
         {
-            if (right_->height() > max)
+            if (right_->height() > aux)
             {
-                max = right_->height();
+                aux = right_->height();
             }
         }
         
         if (left_ != nullptr)
         {
-            if (left_->height() > max)
+            if (left_->height() > aux)
             {
-                max = left_->height();
+                aux = left_->height();
             }   
         }
         
