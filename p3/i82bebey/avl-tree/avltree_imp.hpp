@@ -121,7 +121,35 @@ bool AVLTNode<T>::check_height_invariant () const
 {
     bool ret_val = false;
     //TODO
+    T max = INT_MIN;
+    if (!has_left() && !has_left())
+    {
+        max = -1;
+        
+    }
+    
+    if (has_left() && right_->height() > max)
+    {
+        
+        max = left_->height();
+        if (height = max +1 )
+        {
+            return 1;
+        }
 
+    }
+    if (has_right() && right_->height() > max)
+    {
+
+        max = right_->height();
+
+
+    }
+      
+    if (height = max +1 )
+        {
+            return 1;
+        }
     //
     return ret_val;
 }
@@ -228,7 +256,7 @@ template <class T>
 AVLTree<T>::AVLTree ()
 {
     //TODO
-
+    AVLTree<T>::create ();
     //
     assert(is_a_binary_search_tree());
     assert(is_a_balanced_tree());
@@ -238,7 +266,7 @@ template <class T>
 AVLTree<T>::AVLTree (T const& item)
 {
     //TODO
-
+    return std::make_shared<AVLTree<T>>(item);
     //
     assert(is_a_binary_search_tree());
     assert(is_a_balanced_tree());
@@ -261,12 +289,34 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
 {
     auto tree = AVLTree<T>::create();
     std::string token;
-    in >> token;
+    //in >> token;
     if (!in)
         throw std::runtime_error("Wrong input format");
 
     //TODO
+    char trash; 
+      in>>token;
+      if (token == "[]") return tree;
 
+      if (!in) throw std::runtime_error("Wrong input format.");
+      
+      in>>token;
+      std::istringstream translater(token);
+
+      T item;
+      translater>>item;
+      tree->set_item(item);
+
+      if (!in) throw std::runtime_error("Wrong input format.");  
+
+        auto leftTree = BTree<T>::create(in);
+        tree->set_left(leftTree);    
+      
+        auto rightTree = BTree<T>::create(in);
+        tree->set_right(rightTree);
+      
+      
+       in>>trash;
 
     //
 
@@ -300,6 +350,7 @@ void create_inserting_median(std::vector<T> const& data,
     // (begin, end] interval
     //and recursively, apply to each sub-interval [begin, median),
     //[median+1, end).
+
 }
 
 template<class T>
