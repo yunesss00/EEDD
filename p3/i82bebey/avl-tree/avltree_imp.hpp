@@ -234,7 +234,7 @@ void AVLTNode<T>::compute_height()
 {
     //TODO
     T aux = 0;
-    if (has_left() == nullptr && has_right() == nullptr) height_ = 0;
+    if (left_ == nullptr && right_ == nullptr) height_ = 0;
     
     else
     {
