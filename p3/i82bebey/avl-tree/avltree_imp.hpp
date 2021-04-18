@@ -187,7 +187,7 @@ template <class T>
 void AVLTNode<T>::set_left(AVLTNode<T>::Ref const& new_child)
 {
     //TODO
-    left_->set_item() = new_child;
+    left_->set_item(new_child);
     //
     assert(check_height_invariant());
     assert(left()==new_child);
@@ -207,7 +207,7 @@ template <class T>
 void AVLTNode<T>::set_right(AVLTNode<T>::Ref const& new_child)
 {
     //TODO
-    right_->set_item() = new_child;
+    right_->set_item(new_child);
     //
     assert(check_height_invariant());
     assert(right()==new_child);
