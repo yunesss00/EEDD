@@ -30,7 +30,10 @@ AVLTNode<T>::AVLTNode (T const& it, AVLTNode<T>::Ref parent,
     item_(it), parent_(parent), left_(left), right_(right), height_(0)
 {
     //TODO
-
+    it = T();
+    parent = nullptr;
+    left = nullptr;
+    right = nullptr;
     //
     assert(check_height_invariant());
 }
@@ -48,7 +51,7 @@ template <class T>
 const T& AVLTNode<T>::item() const
 {
     //TODO
-    return T();
+    return item_;
 }
 
 template <class T>
@@ -63,7 +66,7 @@ int AVLTNode<T>::balance_factor() const
 {
     int bf = 0;
     //TODO
-
+    bf = height.left() - height.right();
     //
     return bf;
 }
@@ -72,6 +75,7 @@ template <class T>
 bool AVLTNode<T>::has_parent() const
 {
     //TODO
+    if (parent_ != nullptr) return true;
     return false;
 }
 
@@ -79,13 +83,14 @@ template <class T>
 typename AVLTNode<T>::Ref AVLTNode<T>::parent() const
 {
     //TODO
-    return nullptr;
+    return parent_;
 }
 
 template <class T>
 bool AVLTNode<T>::has_left() const
 {
     //TODO
+    if (left_ != nullptr) return true;
     return false;
 }
 
@@ -93,13 +98,14 @@ template <class T>
 typename AVLTNode<T>::Ref AVLTNode<T>::left() const
 {
     //TODO
-    return nullptr;
+    return left_;
 }
 
 template <class T>
 bool AVLTNode<T>::has_right() const
 {
     //TODO
+    if (right_ != nullptr) return true;
     return false;
 }
 
@@ -107,7 +113,7 @@ template <class T>
 typename AVLTNode<T>::Ref AVLTNode<T>::right() const
 {
     //TODO
-    return nullptr;
+    return right_;
 }
 
 template <class T>
@@ -124,7 +130,7 @@ template <class T>
 void AVLTNode<T>::set_item(const T& new_it)
 {
     //TODO
-
+    item_ = new_it;
     //
     assert(item()==new_it);
 }
@@ -133,7 +139,7 @@ template <class T>
 void AVLTNode<T>::set_parent(AVLTNode<T>::Ref const& new_parent)
 {
     //TODO
-
+    parent_ = new_parent;
     //
     assert(parent()==new_parent);
 }
@@ -142,7 +148,7 @@ template <class T>
 void AVLTNode<T>::remove_parent()
 {
     //TODO
-
+    parent_ = nullptr;
     //
     assert(!has_parent());
 }
@@ -151,7 +157,7 @@ template <class T>
 void AVLTNode<T>::set_left(AVLTNode<T>::Ref const& new_child)
 {
     //TODO
-
+    left_ = new_child;
     //
     assert(check_height_invariant());
     assert(left()==new_child);
@@ -161,7 +167,7 @@ template <class T>
 void AVLTNode<T>::remove_left()
 {
     //TODO
-
+    left_ = nullptr;
     //
     assert(check_height_invariant());
     assert(!has_left());
@@ -171,7 +177,7 @@ template <class T>
 void AVLTNode<T>::set_right(AVLTNode<T>::Ref const& new_child)
 {
     //TODO
-
+    right_ = new_child;
     //
     assert(check_height_invariant());
     assert(right()==new_child);
@@ -181,7 +187,7 @@ template <class T>
 void AVLTNode<T>::remove_right()
 {
     //TODO
-
+    right_ = nullptr;
     //
     assert(check_height_invariant());
     assert(!has_right());
@@ -191,7 +197,7 @@ template <class T>
 void AVLTNode<T>::compute_height()
 {
     //TODO
-
+    
     //
     assert(check_height_invariant());
 }
