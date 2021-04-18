@@ -58,7 +58,7 @@ template <class T>
 int AVLTNode<T>::height() const
 {
     //TODO
-    return -1;
+    return height_;
 }
 
 template <class T>
@@ -66,7 +66,7 @@ int AVLTNode<T>::balance_factor() const
 {
     int bf = 0;
     //TODO
-    bf = height.left() - height.right();
+    bf = left_.heigth() - right_.height();
     //
     return bf;
 }
@@ -197,6 +197,24 @@ template <class T>
 void AVLTNode<T>::compute_height()
 {
     //TODO
+    T aux;
+    if (!has_left() && !has_right())
+    {
+        return 0;
+    }
+    else
+    {
+        if (has_left())
+        {
+            aux = left_.height();
+        }
+
+        if (has_right() && right_.height() < aux)
+        {
+            aux = right_.height();
+        }
+        
+    }
     
     //
     assert(check_height_invariant());

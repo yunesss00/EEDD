@@ -448,8 +448,9 @@ protected:
 
   //TODO
   //Chose a representation for this TAD.
-
-
+  
+  typename AVLTree<T>::Ref root_;
+  
   //
 
 };
