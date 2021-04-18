@@ -1,6 +1,8 @@
 #pragma once
 
 #include "avltree.hpp"
+#include <bits/stdc++.h>
+
 
 #ifdef assert
 //We undefined this macro to not shadow our implementation of assert.
@@ -256,7 +258,7 @@ template <class T>
 AVLTree<T>::AVLTree ()
 {
     //TODO
-    AVLTree<T>::create ();
+   // AVLTree<T>::create ();
     //
     assert(is_a_binary_search_tree());
     assert(is_a_balanced_tree());
@@ -266,7 +268,7 @@ template <class T>
 AVLTree<T>::AVLTree (T const& item)
 {
     //TODO
-    return std::make_shared<AVLTree<T>>(item);
+   // return std::make_shared<AVLTree<T>>(item);
     //
     assert(is_a_binary_search_tree());
     assert(is_a_balanced_tree());
@@ -294,7 +296,7 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
         throw std::runtime_error("Wrong input format");
 
     //TODO
-    char trash; 
+   /* char trash; 
       in>>token;
       if (token == "[]") return tree;
 
@@ -316,7 +318,7 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
         tree->set_right(rightTree);
       
       
-       in>>trash;
+       in>>trash;*/
 
     //
 
