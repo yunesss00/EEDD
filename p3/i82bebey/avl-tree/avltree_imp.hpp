@@ -32,10 +32,10 @@ AVLTNode<T>::AVLTNode (T const& it, AVLTNode<T>::Ref parent,
     item_(it), parent_(parent), left_(left), right_(right), height_(0)
 {
     //TODO
-    it = T();
-    parent = nullptr;
-    left = nullptr;
-    right = nullptr;
+    item_ = it;
+    parent_ = parent;
+    left_ = left;
+    right_ = right;
     //
     assert(check_height_invariant());
 }
