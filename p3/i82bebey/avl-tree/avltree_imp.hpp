@@ -134,7 +134,7 @@ bool AVLTNode<T>::check_height_invariant () const
     {
         
         max = left_->height();
-        if (height = max +1 )
+        if (height_ == max +1 )
         {
             return 1;
         }
@@ -148,7 +148,7 @@ bool AVLTNode<T>::check_height_invariant () const
 
     }
       
-    if (height = max +1 )
+    if (height_ == max +1 )
         {
             return 1;
         }
@@ -230,22 +230,23 @@ void AVLTNode<T>::compute_height()
     T aux;
     if (!has_left() && !has_right())
     {
-        return 0;
+        aux = -1;
     }
     else
     {
         if (has_left())
         {
-            aux = left_.height();
+            aux = left_->height();
         }
 
-        if (has_right() && right_.height() < aux)
+        if (has_right() && right_->height() < aux)
         {
-            aux = right_.height();
+            aux = right_->height();
         }
         
     }
     
+    height_ = aux + 1;
     //
     assert(check_height_invariant());
 }
