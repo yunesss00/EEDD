@@ -233,21 +233,25 @@ template <class T>
 void AVLTNode<T>::compute_height()
 {
     //TODO
-    T aux;
-    if (!has_left() && !has_right())
-    {
-        aux = -1;
-    }
+    T aux = 0;
+    if (has_left() == nullptr && has_right() == nullptr) height_ = 0;
+    
     else
     {
-        if (has_left())
+        if (right_ != nullptr)
         {
-            aux = left_->height();
+            if (right_->height() > max)
+            {
+                max = right_->height();
+            }
         }
-
-        if (has_right() && right_->height() < aux)
+        
+        if (left_ != nullptr)
         {
-            aux = right_->height();
+            if (left_->height() > max)
+            {
+                max = left_->height();
+            }   
         }
         
     }
