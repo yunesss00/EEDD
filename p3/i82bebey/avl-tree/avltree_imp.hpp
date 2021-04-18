@@ -161,6 +161,8 @@ void AVLTNode<T>::set_item(const T& new_it)
 {
     //TODO
     item_ = new_it;
+    compute_height();
+
     //
     assert(item()==new_it);
 }
@@ -170,6 +172,8 @@ void AVLTNode<T>::set_parent(AVLTNode<T>::Ref const& new_parent)
 {
     //TODO
     parent_ = new_parent;
+    compute_height();
+
     //
     assert(parent()==new_parent);
 }
@@ -179,6 +183,7 @@ void AVLTNode<T>::remove_parent()
 {
     //TODO
     parent_ = nullptr;
+    compute_height();
     //
     assert(!has_parent());
 }
@@ -188,6 +193,7 @@ void AVLTNode<T>::set_left(AVLTNode<T>::Ref const& new_child)
 {
     //TODO
     left_ = new_child;
+    compute_height();
     //
     assert(check_height_invariant());
     assert(left()==new_child);
@@ -198,6 +204,7 @@ void AVLTNode<T>::remove_left()
 {
     //TODO
     left_ = nullptr;
+    compute_height();    
     //
     assert(check_height_invariant());
     assert(!has_left());
@@ -208,6 +215,7 @@ void AVLTNode<T>::set_right(AVLTNode<T>::Ref const& new_child)
 {
     //TODO
     right_ = new_child;
+    compute_height();
     //
     assert(check_height_invariant());
     assert(right()==new_child);
@@ -218,6 +226,7 @@ void AVLTNode<T>::remove_right()
 {
     //TODO
     right_ = nullptr;
+    compute_height();
     //
     assert(check_height_invariant());
     assert(!has_right());
