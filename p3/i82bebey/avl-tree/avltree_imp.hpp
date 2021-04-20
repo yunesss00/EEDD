@@ -543,7 +543,7 @@ bool AVLTree<T>::is_a_binary_search_tree() const
     bool is_bst = true;
     //TODO
     
-    if (!is_empty())
+    /*if (!is_empty())
     {
         if (root_->has_left())
         {
@@ -558,7 +558,43 @@ bool AVLTree<T>::is_a_binary_search_tree() const
         is_bst = is_bst && left()->is_a_binary_search_tree() && right()->is_a_binary_search_tree();
         
     }
-    
+    */
+   bool r = false;
+    bool l = false;
+    int t = 0;
+
+    if( is_empty() ) return true;
+
+    if( root_->has_left() ) l = true;
+    if( root_->has_right() ) r = true;
+
+    if( l==false && r==false ) return true;
+    else{
+
+        if(l==true){
+            if(root_->item() > root_->left()->item()){
+                left()->is_a_binary_search_tree();
+                t++;
+            }
+            else{
+                return false;
+            }
+        }
+
+        if(r==true){
+            if(root_->item() < root_->right()->item()){
+                right()->is_a_binary_search_tree();
+                t++;
+            }
+            else{
+                return false;
+            }
+        }
+
+        if(t==0) return false;
+        else return true;
+    }
+
     //
     return is_bst;
 }
@@ -576,6 +612,7 @@ bool AVLTree<T>::is_a_balanced_tree() const
     {
         is_balanced = ( std::abs(balance_factor()) <= 1 && left()->is_a_balanced_tree() && right()->is_a_balanced_tree() );
     }
+    else return true;
     
     //
     return is_balanced;
@@ -587,7 +624,8 @@ void AVLTree<T>::create_root(T const& item)
 {
     assert(is_empty());
     //TODO
-    root_ = AVLTNode<T>::create(item, nullptr, nullptr, nullptr);
+    root_ = AVLTNode<T>::create(item);
+    root_ -> compute_height();
     //
     assert(is_a_binary_search_tree());
     assert(is_a_balanced_tree());
@@ -638,7 +676,7 @@ void AVLTree<T>::insert(T const& k)
        
         if (is_empty())
         {
-            curr_ = AVLTNode<T>::create(k, nullptr, nullptr, nullptr);
+            curr_ = AVLTNode<T>::create(k);
             root_ = curr_;
         }
         else
@@ -691,14 +729,21 @@ void AVLTree<T>::remove ()
         //TODO
         //Manage cases 0,1,2
 
-        if (prev_ == nullptr) root_ = subtree;
-       
-        else if (prev_->right() == curr_) prev_->set_right(subtree);
-
-        else prev_->set_left(subtree);
-
-        curr_ = nullptr;
-
+        if (prev_ == nullptr) 
+        {
+            root_ = subtree;
+            curr_ = nullptr;
+        }
+        else if (prev_->right() == curr_) 
+        {
+            prev_->set_right(subtree);
+            curr_ = nullptr;
+        }
+        else
+        {
+            prev_->set_left(subtree);
+            curr_ = nullptr;
+        }
         //
 #ifdef __ONLY_BSTREE__
         assert(is_a_binary_search_tree());
@@ -721,12 +766,15 @@ void AVLTree<T>::remove ()
         remove();
         //
     }
+
+    root_->compute_height();
 }
 
 template <class T>
 AVLTree<T>::AVLTree (typename AVLTNode<T>::Ref root_node)
 {
     //TODO
+    root_ = root_node;
 }
 
 template <class T>
@@ -750,13 +798,8 @@ void AVLTree<T>::set_left(typename AVLTree<T>::Ref& subtree)
     //TODO
     //Remenber to set parent's link of the subtree root to this.
 
-    if(!subtree->is_empty())
-    {
-        auto new_node = AVLTNode<T>::create(subtree->root_->item(),root_,subtree->root_->left(),subtree->root_->right());
-        new_node->compute_height();
-        root_->set_left(new_node);
-    }
-    else root_->set_left(nullptr);
+    root_->set_left(subtree->root_);
+    root_->compute_height();
 
     //
     assert(subtree->is_empty() || left()->item()==subtree->item());
@@ -770,13 +813,8 @@ void AVLTree<T>::set_right(typename AVLTree<T>::Ref& subtree)
     //TODO
     //Remenber to set parent's link of the subtree root to this.
 
-    if(!subtree->is_empty())
-    {
-        auto new_node = AVLTNode<T>::create(subtree->root_->item(),root_,subtree->root_->left(),subtree->root_->right());
-        new_node->compute_height();
-        root_->set_right(new_node);
-    }
-    else root_->set_right(nullptr);
+    root_->set_right(subtree->root_);
+    root_->compute_height();
 
     //
     assert(subtree->is_empty()|| right()->item()==subtree->item());
