@@ -275,7 +275,7 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
         throw std::runtime_error("Wrong input format");
 
     //TODO
-    /*char aux;
+    char aux;
       T item;
       
       if (token == "[]") return tree;
@@ -299,7 +299,7 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
         tree->set_right(right_tree);
 
         in>>aux;
-*/
+
     //
 
     if (! tree->is_a_binary_search_tree())
