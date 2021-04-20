@@ -702,12 +702,12 @@ void AVLTree<T>::insert(T const& k)
        
         if (is_empty())
         {
-            curr_ = AVLTNode<T>::create(k, nullptr, nullptr, nullptr);
+            curr_ = AVLNode<T>::create(k, nullptr, nullptr, nullptr);
             root_ = curr_;
         }
         else
         {
-            curr_ = AVLTNode<T>::create(k, prev_, nullptr, nullptr);
+            curr_ = AVLNode<T>::create(k, prev_, nullptr, nullptr);
 
             if(prev_->item() > k) prev_->set_left(curr_);
             else prev_->set_right(curr_);
