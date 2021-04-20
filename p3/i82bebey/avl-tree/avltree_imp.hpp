@@ -459,7 +459,7 @@ int AVLTree<T>::current_level() const
     
     while (auxptr != curr_)
     {
-        if (auxptr->item() > curr_-item())
+        if (auxptr->item() > curr_->item())
         {
             auxptr = auxptr->left();
         }
