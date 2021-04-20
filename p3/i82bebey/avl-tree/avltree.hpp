@@ -449,9 +449,9 @@ protected:
   //TODO
   //Chose a representation for this TAD.
   
-  typename AVLTree<T>::Ref root_;
-  typename AVLTree<T>::Ref curr_;
-  typename AVLTree<T>::Ref prev_;
+  typename AVLTNode<T>::Ref root_;
+  typename AVLTNode<T>::Ref curr_;
+  typename AVLTNode<T>::Ref prev_;
   //
 
 };
