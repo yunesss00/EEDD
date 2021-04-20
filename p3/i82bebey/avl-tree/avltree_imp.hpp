@@ -279,25 +279,30 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
         throw std::runtime_error("Wrong input format");
 
     //TODO
-    if (token != "[]")
-    {
-        throw std::runtime_error("Wrong input format");
-    }
-    else if (token == "[")
-    {
-        T item;
+      char aux;
+      T item;
+      
+      if (token == "[]") return tree;
 
-        in >> item;
-        tree = AVLTree<T>::create(item);
+        if (!in){ throw std::runtime_error("Wrong input format");}
+
+        in>>token;
+        std::istringstream translater(token);
+
+
+        
+        translater >> item;
+        tree->create_root(item);
+
+        if (!in){ throw std::runtime_error("Wrong input format"); }
+
         auto left_tree = AVLTree<T>::create(in);
-        auto right_tree = AVLTree<T>::create(in);
         tree->set_left(left_tree);
-        tree->set_right(right_tree);
-        in >> token;
-    }
-    
 
-    
+        auto right_tree = AVLTree<T>::create(in);
+        tree->set_right(right_tree);
+
+        in>>aux;
 
     //
 
@@ -378,9 +383,13 @@ std::ostream& AVLTree<T>::fold(std::ostream& out) const
     {
         out << "[ ";
         out << item() << " ";
-        left()->fold(out);
+        
+        auto left_tree = left();
+        left_tree->fold(out);
         out << " ";
-        right() ->fold(out);
+        
+        auto right_tree = right();
+        right_tree->fold(out);
         out << " ]";
     }
     //
@@ -391,34 +400,7 @@ template <class T>
 bool AVLTree<T>::current_exists() const
 {
     //TODO
-    auto auxptr = root_;
-
-    while (true)
-    {
-        if (curr_ == nullptr) return false;
-
-        if (curr_->item() > auxptr->item())
-        {
-            if (auxptr->has_right())
-            {
-                auxptr = auxptr->right();
-            }
-            else return false;
-            
-        }
-        else if (curr_->item() < auxptr->item())
-        {
-            if (auxptr->has_left())
-            {
-                auxptr = auxptr->left();
-            }
-            else return false;
-        }
-        else return false;
-        
-        
-    }
-    
+    if (curr_ != nullptr) return true;
     return false;
 }
 
@@ -463,13 +445,9 @@ typename AVLTree<T>::Ref AVLTree<T>::left() const
     //TODO
     auto left_tree = AVLTree<T>::create();
     
-    if (root_->has_left())
-    {
-        left_tree->create_root(root_->left()->item());
-        left_tree->root_->set_left(root_->left()->left());
-        left_tree->root_->set_right(root_->left()->right());
-        left_tree->root_->set_parent(nullptr);
-    }
+    left_tree->root_ = root_->left();
+
+    root_->compute_height();
     
     return left_tree;
 }
@@ -481,13 +459,10 @@ typename AVLTree<T>::Ref AVLTree<T>::right() const
     //TODO
     auto right_tree = AVLTree<T>::create();
     
-    if(root_->has_right())
-    {
-        right_tree->create_root(root_->right()->item());
-        right_tree->root_->set_left(root_->right()->left());
-        right_tree->root_->set_right(root_->right()->right());
-        right_tree->root_->set_parent(nullptr);
-    }
+    right_tree->root_ = root_->right();
+
+    root_->compute_height();
+
     return right_tree;
 }
 
@@ -506,10 +481,9 @@ int AVLTree<T>::height() const
 {
     int h = -1;
     //TODO
-    if(!is_empty())
-        h = root_->height();
+    if( is_empty() ) return h;
+    return root_->height();
     //
-    return h;
 }
 
 template <class T>
@@ -520,8 +494,7 @@ int AVLTree<T>::balance_factor() const
 #else
     int bf = 0;
     //TODO
-    if(!is_empty())
-        bf = root_->balance_factor();
+    bf = right()->height() - left()->height();
     //
     return bf;
 #endif
@@ -542,38 +515,20 @@ bool AVLTree<T>::has(const T& k) const
   //TODO
   auto auxptr = root_;
 
-  while (true)
-  {
-      if (k < auxptr->item())
-      {
-          if (auxptr->has_left())
-          {
-              auxptr = auxptr->left();
-          }
-          else 
-          {
-              found = false;
-              break;
-          }
-      }
-      else if (k > auxptr->item())
-      {
-          if (auxptr->has_right())
-          {
-              auxptr = auxptr->right();
-          }
-          else
-          {
-              found = false;
-              break;
-          }
-          
-      }
-      else break;
-      
-    
-  }
-  
+  if(!is_empty()){
+        if(k < item())
+        {
+            found = left()->has(k);
+        }
+        else if(k > item())
+        {
+            found = right()->has(k);
+        }
+        else
+        {
+            found = true;
+        }
+    }
 
   //
 #ifndef NDEBUG
