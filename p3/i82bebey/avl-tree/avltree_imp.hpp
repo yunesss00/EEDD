@@ -65,7 +65,7 @@ int AVLTNode<T>::balance_factor() const
 {
     int bf = 0;
     //TODO
-    bf = left_.heigth() - right_.height();
+    bf = left_->heigth() - right_->height();
     //
     return bf;
 }
@@ -465,7 +465,7 @@ int AVLTree<T>::current_level() const
         }
         else  if (auxptr->item() < curr_->item())
         {
-            auxptr = auxptr->item();
+            auxptr = auxptr->right();
         }
         
         level++;
@@ -656,7 +656,7 @@ void AVLTree<T>::create_root(T const& item)
     assert(is_a_binary_search_tree());
     assert(is_a_balanced_tree());
     assert(!is_empty());
-    assert(item()==item);
+    assert(this->item()==item);
 
 }
 
