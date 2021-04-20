@@ -275,7 +275,7 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
         throw std::runtime_error("Wrong input format");
 
     //TODO
-    char aux;
+    /*char aux;
       T item;
       
       if (token == "[]") return tree;
@@ -299,7 +299,7 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
         tree->set_right(right_tree);
 
         in>>aux;
-
+*/
     //
 
     if (! tree->is_a_binary_search_tree())
@@ -368,7 +368,7 @@ template <class T>
 std::ostream& AVLTree<T>::fold(std::ostream& out) const
 {
     //TODO
-    /*if (is_empty())
+    if (is_empty())
     {
         out << "[]";
     }
@@ -384,7 +384,7 @@ std::ostream& AVLTree<T>::fold(std::ostream& out) const
         auto right_tree = right();
         right_tree->fold(out);
         out << " ]";
-    }*/
+    }
     //
     return out;
 }
