@@ -208,14 +208,18 @@ void AVLTNode<T>::compute_height()
     else{
 
         int max = 0;
-        if(right_ != nullptr){
-            if(right_->height() > max){
+        if(right_ != nullptr)
+        {
+            if(right_->height() > max)
+            {
                 max = right_->height();
             }
         }
 
-        if(left_ != nullptr){
-            if(left_->height() > max){
+        if(left_ != nullptr)
+        {
+            if(left_->height() > max)
+            {
                 max = left_->height();
             }
         }
@@ -355,7 +359,7 @@ template <class T>
 bool AVLTree<T>::is_empty () const
 {
     //TODO
-    if (root_ != nullptr) return true;
+    if (root_ == nullptr) return true;
     return false;
 }
 template <class T>
