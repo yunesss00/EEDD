@@ -357,7 +357,7 @@ bool AVLTree<T>::is_empty () const
     //TODO
     if (root_ != nullptr) return true;
     return false;
-
+}
 template <class T>
 T const& AVLTree<T>::item() const
 {
