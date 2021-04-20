@@ -65,7 +65,7 @@ int AVLTNode<T>::balance_factor() const
 {
     int bf = 0;
     //TODO
-    bf = left_->heigth() - right_->height();
+    bf = left_->height() - right_->height();
     //
     return bf;
 }
