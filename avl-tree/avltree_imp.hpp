@@ -604,7 +604,7 @@ void AVLTree<T>::create_root(T const& item)
     assert(is_a_binary_search_tree());
     assert(is_a_balanced_tree());
     assert(!is_empty());
-    assert(root_->item()==item);
+    //assert(root_->item()==item);
 
 }
 
