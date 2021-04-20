@@ -451,7 +451,7 @@ protected:
   
   typename AVLTNode<T>::Ref root_;
   typename AVLTNode<T>::Ref curr_;
-  typename AVLTNode<T>::Ref prev_;
+  typename AVLTNode<T>::Ref parent_;
   //
 
 };
