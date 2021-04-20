@@ -32,7 +32,7 @@ AVLTNode<T>::AVLTNode (T const& it, AVLTNode<T>::Ref parent,
     item_(it), parent_(parent), left_(left), right_(right), height_(0)
 {
     //TODO
-    
+    compute_height();
     //
     assert(check_height_invariant());
 }
@@ -64,8 +64,14 @@ template <class T>
 int AVLTNode<T>::balance_factor() const
 {
     int bf = 0;
-    //TODO
-    bf = left_->height() - right_->height();
+    //TODO**
+    int peso_izq = 0, peso_der=0;
+    if(has_left())
+        peso_izq = left_->height()+1;
+    if(has_right())
+        peso_der = right_->height()+1;
+
+    bf = peso_der - peso_izq;
     //
     return bf;
 }
@@ -74,8 +80,8 @@ template <class T>
 bool AVLTNode<T>::has_parent() const
 {
     //TODO
-    if (parent_ != nullptr) return true;
-    return false;
+    //if (parent_ != nullptr) return true;
+    return parent_ != nullptr;
 }
 
 template <class T>
@@ -89,8 +95,8 @@ template <class T>
 bool AVLTNode<T>::has_left() const
 {
     //TODO
-    if (left_ != nullptr) return true;
-    return false;
+    //if (left_ != nullptr) return true;
+    return left_ != nullptr;
 }
 
 template <class T>
@@ -104,8 +110,8 @@ template <class T>
 bool AVLTNode<T>::has_right() const
 {
     //TODO
-    if (right_ != nullptr) return true;
-    return false;
+    //if (right_ != nullptr) return true;
+    return right_ != nullptr;
 }
 
 template <class T>
@@ -120,39 +126,31 @@ bool AVLTNode<T>::check_height_invariant () const
 {
     bool ret_val = true;
     //TODO
-    /*T max = INT_MIN;
-    if (!has_left() && !has_left())
+    int peso_izq=-1, peso_der=-1, max;
+
+    if(has_left())
     {
-        max = -1;
-        
+        peso_izq=left_->height();
     }
-    
-    if (has_left() && right_->height() > max)
+    if(has_right())
     {
-        
-        max = left_->height();
-        if (height_ == max +1 )
-        {
-            return 1;
-        }
-
+        peso_der=right_->height();
     }
-    if (has_right() && right_->height() > max)
+    if(peso_der>peso_izq)
     {
-
-        max = right_->height();
-
-
+        max=peso_der+1;
     }
-      
-    if (height_ == max +1 )
-        {
-            return 1;
-        }
+    else
+    {
+        max=peso_izq+1;
+    }
+    if(height_==max)
+    {
+        ret_val=true;
+    }
     //
     return ret_val;
-    */
-    return true;
+    
 }
 
 template <class T>
@@ -235,50 +233,24 @@ template <class T>
 void AVLTNode<T>::compute_height()
 {
     //TODO
-    /*int aux = INT_MIN;
-    if (left_ == nullptr && right_ == nullptr) height_ = 0;
-    
+    int peso_izq=-1, peso_der=-1;
+
+    if(has_left())
+    {
+        peso_izq=left_->height();
+    }
+    if(has_right())
+    {
+        peso_der=right_->height();
+    }
+    if(peso_der>peso_izq)
+    {
+        height_=peso_der+1;
+    }
     else
     {
-        if (right_ != nullptr)
-        {
-            if (right_->height() > aux)
-            {
-                aux = right_->height();
-            }
-        }
-        
-        if (left_ != nullptr)
-        {
-            if (left_->height() > aux)
-            {
-                aux = left_->height();
-            }   
-        }
-        
+        height_=peso_izq+1;
     }
-    
-    height_ = aux + 1;*/
-    T max = INT_MIN;
-    if (!has_left() && !has_right())
-    {
-        max = -1;
-    }
-    
-    if (has_left())
-    {
-        
-        max = left_->height();
-
-    }
-    if (has_right() && right_.get()->height() > max)
-    {
-
-        max = right_->height();
-
-    }
-      
-    height_ =  1 + max;
     //
     assert(check_height_invariant());
 }
