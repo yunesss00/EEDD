@@ -139,7 +139,7 @@ bool AVLTNode<T>::check_height_invariant () const
 
     if (height_ == max)
     {
-        ret_val 0 true;
+        ret_val = true;
     }
 
     return ret_val;
@@ -468,7 +468,7 @@ int AVLTree<T>::current_level() const
             auxptr = auxptr->item();
         }
         
-        level ++:
+        level++;
     }
     
     //
@@ -611,12 +611,12 @@ bool AVLTree<T>::is_a_binary_search_tree() const
     {
         if (root_->has_left())
         {
-            is_bts = is_bst && (item() > left()->item());
+            is_bst = is_bst && (item() > left()->item());
         }
 
         if (root_->has_right())
         {
-            is_bts = is_bst && (item() < right()->item());
+            is_bst = is_bst && (item() < right()->item());
         }
 
         is_bst = is_bst && left()->is_a_binary_search_tree() && right()->is_a_binary_search_tree();
@@ -779,9 +779,9 @@ void AVLTree<T>::remove ()
         //TODO
         //Manage case 3.
 
-        auto aux = current_;
+        auto aux = curr_;
         find_inorder_sucessor();
-        aux->set_item(current_->item());
+        aux->set_item(curr_->item());
         remove();
         //
     }
