@@ -702,7 +702,7 @@ void AVLTree<T>::insert(T const& k)
        
         if (is_empty())
         {
-            curr_ = AVLTNode<T>::create(k, nullptr, nullptr, nullptr);;
+            curr_ = AVLTNode<T>::create(k, nullptr, nullptr, nullptr);
             root_ = curr_;
         }
         else
