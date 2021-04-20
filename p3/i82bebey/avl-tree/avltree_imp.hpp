@@ -151,8 +151,9 @@ bool AVLTNode<T>::check_height_invariant () const
     }
 
     return ret_val;
-}*/
+*/
 return true;
+}
 
 template <class T>
 void AVLTNode<T>::set_item(const T& new_it)
