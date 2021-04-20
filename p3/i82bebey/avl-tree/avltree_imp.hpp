@@ -302,7 +302,7 @@ typename AVLTree<T>::Ref AVLTree<T>::create(std::istream& in) noexcept(false)
     {
         throw std::runtime_error("Wrong input format");
     }
-    else if (token = "[")
+    else if (token == "[")
     {
         T item;
 
