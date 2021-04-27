@@ -123,13 +123,13 @@ void
 Trie::insert(std::string const& k)
 {
     //TODO
-   /* if (root_ == nullptr) 
+    if (root_ == nullptr) 
     {
         root_ = TrieNode::create();
     }
 
     auto node = root_;
-    for (int i = 0; k.size() ; i++)
+    for (unsigned i = 0; i < k.length() ; i++)
     {
         if (node->has(k[i]))
         {
@@ -144,8 +144,8 @@ Trie::insert(std::string const& k)
     }
     
     node->set_value(k);
-*/
-    if (root_ == nullptr)
+
+   /* if (root_ == nullptr)
     {
         root_ = std::make_shared <TrieNode> ();
     }
@@ -166,7 +166,7 @@ Trie::insert(std::string const& k)
         }
     }
 
-    nod->set_value(k);
+    nod->set_value(k);*/
     //
     assert(has(k));
 }
