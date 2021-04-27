@@ -14,7 +14,7 @@
 inline void assert(bool assertion)
 {
 #ifndef NDEBUG
-    (void)((assertion) || (__assert ("Assert violation!", __FILE__, __LINE__),0));
+    (void)((assertion) || (__assert ("Assert violation!", __FILE__, ),0));
 #endif
 }
 
@@ -145,9 +145,9 @@ Trie::insert(std::string const& k)
     
     node->set_value(k);
 */
+    if (root_ == nullptr)
     {
-        TrieNode z;
-        root_ = std::make_shared <TrieNode> (z);
+        root_ = std::make_shared <TrieNode> ();
     }
 
     auto nod = root_;
@@ -160,8 +160,7 @@ Trie::insert(std::string const& k)
         }
         else
         {
-            TrieNode z;
-            auto newNodo = std::make_shared <TrieNode> (z);
+            auto newNodo = std::make_shared <TrieNode> ();
             nod->insert(k[a], newNodo);
             nod = newNodo;
         }
