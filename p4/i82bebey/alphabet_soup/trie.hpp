@@ -185,6 +185,9 @@ protected:
 
     //TODO
     TrieNode::Ref root_;
+    std::string value_;
+    std::map<char,TrieNode::Ref> children_;
+    std::pair<char,TrieNode::Ref> pair_;
     //
 };
 

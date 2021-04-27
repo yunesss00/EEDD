@@ -35,7 +35,7 @@ TrieNode::has(char k) const
 {
     bool ret_v = false;
     //TODO
-
+    if (children_.find(k) != children_.end()) return true;
     //
     return ret_v;
 }
@@ -46,7 +46,7 @@ TrieNode::child(char k) const
     assert(has(k));
     TrieNode::Ref ret_v;
     //TODO
-
+    ret_v = children_.find(k)->second;
     //
     return ret_v;
 }
@@ -72,7 +72,7 @@ void
 TrieNode::insert(char k, Ref node)
 {
     //TODO
-
+    children_.emplace(k,node);
     //
 }
 
@@ -90,7 +90,7 @@ Trie::Ref Trie::create()
 TrieNode::Ref Trie::root() const
 {
     //TODO
-    return nullptr;
+    return root_;
     //
 }
 
@@ -100,7 +100,9 @@ Trie::has(std::string const& k) const
     bool found = false;
     //TODO
     //Remember: The Trie can have a prefix==k but does not store the key k.
-
+    TrieNode::Ref node;
+    node = find_node(k);
+    if (node != nullptr && node->value() == k) return true;
     //
     return found;
 }
@@ -110,7 +112,8 @@ Trie::keys(std::string const& pref) const
 {
     std::vector<std::string> keys;
     //TODO
-
+    auto node = find_node(pref);
+    if (node == nullptr) preorder_traversal(node, keys);
     //
     return keys;
 }
@@ -120,8 +123,27 @@ void
 Trie::insert(std::string const& k)
 {
     //TODO
+    if (root_ == nullptr) 
+    {
+        root_ = TrieNode::create();
+    }
 
-
+    auto node = root_;
+    for (int i = 0; k.size() ; i++)
+    {
+        if (node->has(k[i]))
+        {
+            node = node->child(k[i]);
+        }
+        else
+        {
+            auto newNode = TrieNode::create();
+            node->insert(k[i], newNode);
+            node = newNode;
+        }
+    }
+    
+    node->set_value(k);
 
     //
     assert(has(k));
@@ -132,9 +154,21 @@ Trie::find_node(std::string const& pref) const
 {
     TrieNode::Ref node;
     //TODO
+    int i = 0;
+    node = root_;
 
-
-
+    while (i < pref.size() && node != nullptr)
+    {
+        if (node->has(pref[i]))
+        {
+            node = node->child(pref[i]);
+            i++;
+        }
+        else
+        {
+            node = nullptr;
+        }
+    }
     //
     return node;
 }
@@ -144,7 +178,18 @@ Trie::preorder_traversal(TrieNode::Ref const& node,
                          std::vector<std::string> & keys) const
 {
     //TODO
+    if (node->value() != "")
+    {
+        keys = keys.push_front(node->value());
+        for (std::map<char, std::shared_ptr<TrieNode>>::const_iterator i = node->children().begin(); i != node->children().end(); i++)
+        {
+            preorder_traversal(i->second, keys);
+        }
+        
 
+        
+    }
+    
 
     //
 }
