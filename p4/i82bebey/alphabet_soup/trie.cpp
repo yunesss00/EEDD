@@ -123,9 +123,9 @@ void
 Trie::insert(std::string const& k)
 {
     //TODO
-    if (root_ == nullptr) 
     {
-        root_ = TrieNode::create();
+        TrieNode z;
+        root_ = std::make_shared <TrieNode> (z);
     }
 
     auto node = root_;
