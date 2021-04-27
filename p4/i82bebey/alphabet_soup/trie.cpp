@@ -14,7 +14,7 @@
 inline void assert(bool assertion)
 {
 #ifndef NDEBUG
-    (void)((assertion) || (__assert ("Assert violation!", __FILE__, ),0));
+    (void)((assertion) || (__assert ("Assert violation!", __FILE__, __LINE__),0));
 #endif
 }
 
