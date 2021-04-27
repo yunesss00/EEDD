@@ -109,7 +109,7 @@ Trie::has(std::string const& k) const
 
 std::vector<std::string>
 Trie::keys(std::string const& pref) const
-{
+{   
     std::vector<std::string> keys;
     //TODO
     auto node = find_node(pref);
@@ -144,29 +144,6 @@ Trie::insert(std::string const& k)
     }
     
     node->set_value(k);
-
-   /* if (root_ == nullptr)
-    {
-        root_ = std::make_shared <TrieNode> ();
-    }
-
-    auto nod = root_;
-
-    for(unsigned a = 0 ; a < k.length() ; a++)
-    {
-        if(nod->has(k[a]))
-        {
-            nod = nod->child(k[a]);
-        }
-        else
-        {
-            auto newNodo = std::make_shared <TrieNode> ();
-            nod->insert(k[a], newNodo);
-            nod = newNodo;
-        }
-    }
-
-    nod->set_value(k);*/
     //
     assert(has(k));
 }
@@ -207,9 +184,7 @@ Trie::preorder_traversal(TrieNode::Ref const& node,
         {
             preorder_traversal(i->second, keys);
         }
-        
 
-        
     }
     
 
