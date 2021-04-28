@@ -1,35 +1,5 @@
-#include <cassert>
 #include "alphabet_soup_solver.hpp"
 #include "trie.hpp"
-
-std::istream&
-operator>>(std::istream & in, AlphabetSoup& soup)
-{
-    int rows, cols;
-    in >> rows >> cols;
-    if (in)
-    {
-        soup.resize(rows, cols);
-        in.ignore(); //remove newline.
-        std::string row;
-        for(int i=0;i<rows && in; ++i)
-        {
-            in >> row;
-            if (in)
-                soup.set_row(i, row);
-        }
-    }
-    return in;
-}
-
-std::ostream&
-operator<<(std::ostream& out, AlphabetSoup const& soup)
-{
-    out << soup.rows() << ' ' << soup.cols() << std::endl;
-    for (int i=0;i<soup.rows();++i)
-        out << soup.row(i) << std::endl;
-    return out;
-}
 
 /**
  * @brief scan a cell looking for the next letter of a word.
@@ -43,8 +13,9 @@ operator<<(std::ostream& out, AlphabetSoup const& soup)
  *
  */
 void
-scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup, TrieNode::ref node,
-          std::pair<std::string, std::stack <std::pair<int, int> >> & scan_result)
+scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
+          TrieNode::Ref node,
+          ScanResult & scan_result)
 {
     //ALGORITHM
     //1. If this node is a leaf node (Leaf nodes has value != "").
@@ -58,27 +29,38 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup, TrieNode::
 
     if (node->value() != "")
     {
-        //Base case: We are in a leaf so we have just found a word.
+        //Case 0: This node has a key value
+        //so we have just found a word and stop the recursion.
+        //TODO: update scan_result.first with the key value found.
         scan_result.first = node->value();
-        //update scan_result first value to the key value found.
+        //
     }
     else
     {
         if (row>=0 && row<soup.rows() && col>=0 && col<soup.cols())
         {
             auto const cell_v = soup.cell(row, col);
-
             if (node->has(cell_v))
             {
                 //Recursion case: looking for the next letter.
 
                 node = node->child(cell_v);
-                bool found = false;                
+                bool found = false;
                 if (dx == 0 && dy == 0)
                 {
-                    //TODO
-                    //It is the first letter, so we scan all the neighbourhood (but not the current cell!).
-                    for(int b = -1; b <= 1; b++)
+                    //TODO:
+                    //Case 1: It is the first letter, so we must scan all eight
+                    //neighbours, if possible, to find a word.
+                    for (int i = std::max(row-1, 0); i<std::min(row+2, soup.rows()) && !found; ++i)
+                        for (int j = std::max(col-1, 0); j< std::min(col+2, soup.cols()) && !found; ++j)
+                        {
+                            if (i!=row || j!=col) //we don't want to scan the central cell again.
+                            {
+                                //TODO
+                                //recursive call to scan_cell to scan for the
+                                //next letter in the direction dy=i-row, dx=j-col.
+                                //if(scan_result.first == "") scan_cell(row+j, col+i, i, j, soup, node, scan_result);
+                                for(int b = -1; b <= 1; b++)
 
                     {
                         for(int c = -1; c <= 1; c++)
@@ -89,55 +71,64 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup, TrieNode::
                                 scan_cell(row+b, col+b, b, c, soup, node, scan_result);
                         }
                     }
-                    //Was a word found?
-                    found = (scan_result.first != "");
+
+                                //
+                                //found a word?
+                                found = (scan_result.first != "");
+                            }
+                        }
                 }
                 else
                 {
-                    //TODO
-                    //Not is the first letter, so we follow the scan direction (dy,dx) if we can.
-                    if(scan_result.first == "")
-                        scan_cell(row+dx, col+dy, dy, dx, soup, node, scan_result);
-
-
-                    //Was a word found?
+                    //TODO:
+                    //Case 2: It is middle letter, so we follow the scanning
+                    //direction (dx,dy) if we can.
+                    if(scan_result.first == "") scan_cell(row + dx, col + dy, dy, dx, soup, node, scan_result);
+                    //
+                    //Found a word?
                     found = (scan_result.first != "");
                 }
                 if (found)
+                {
                     //TODO
+                    //A word was found for this chain so push the current cell
+                    //coordinates pair <row,cols> into the
+                    //stack scan_result.second
                     scan_result.second.push(std::make_pair(row, col));
-                    //If a word was found for this chain, we save the current cell coordinates into
-                    //the scan_result stack of cells. Note that the cells are numbered from (1,1) to (rows,cols).
-                    ;
+
+                    //
+                }
             }
-            //else Base case: not found. This chain not is a valid word. Do nothing.
+            //else Case 3: This chain is not a valid key prefix.
         }
-        //else Base case: not found. We are out of the soup grid. Do nothing.
+        //else Case 4: We are out of the soup grid so this is not a valid word.
     }
 }
 
-std::vector< std::pair<std::string, std::stack<std::pair<int, int> >>>
+std::vector< ScanResult >
 alphabet_soup_solver(AlphabetSoup& soup, std::vector<std::string> const& words)
 {
-    std::vector< std::pair<std::string, std::stack<std::pair<int, int> >>> result;
-    Trie trie;
+    std::vector< ScanResult > results;
+    auto trie = Trie::create();
 
-    //Generate a trie with the words as keys.
+    //Generate a trie with the words to be found as keys.
     for (size_t i = 0; i<words.size(); ++i)
-        trie.insert(words[i]);
+        trie->insert(words[i]);
 
+    //We scan all the soup to find a first letter of any key.
     for (int row = 0; row < soup.rows(); ++row)
     {
         for (int col = 0; col < soup.cols(); ++col)
         {
-            auto scan_result = std::make_pair(std::string(""), std::stack<std::pair<int,int>>());
+            auto scan_result = std::make_pair(std::string(""),
+                                              std::stack<std::pair<int,int>>());
             //Scan from this cell. This is the first letter so dx==dy==0.
-            scan_cell(row, col, 0, 0, soup, trie.root(), scan_result);
+            scan_cell(row, col, 0, 0, soup, trie->root(), scan_result);
             if (scan_result.first!="")
-              //A word was found, so to save it into the results.
-              result.push_back(scan_result);
+              //A word was found so save it into the results.
+              results.push_back(scan_result);
         }
     }
-    return result;
+    return results;
 }
 
