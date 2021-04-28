@@ -32,7 +32,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
         //Case 0: This node has a key value
         //so we have just found a word and stop the recursion.
         //TODO: update scan_result.first with the key value found.
-
+        scan_result.first = node->value();
         //
     }
     else
@@ -59,7 +59,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 //TODO
                                 //recursive call to scan_cell to scan for the
                                 //next letter in the direction dy=i-row, dx=j-col.
-
+                                scan_cell(row, col, i - row, j - col, soup, node, scan_result);
 
 
                                 //
@@ -73,7 +73,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     //TODO:
                     //Case 2: It is middle letter, so we follow the scanning
                     //direction (dx,dy) if we can.
-
+                    scan_cell(row + dx, col + dy, dy, dx, soup, node, scan_result);
                     //
                     //Found a word?
                     found = (scan_result.first != "");
@@ -84,7 +84,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     //A word was found for this chain so push the current cell
                     //coordinates pair <row,cols> into the
                     //stack scan_result.second
-
+                    scan_result.second.push(std::make_pair(row, col));
 
                     //
                 }
