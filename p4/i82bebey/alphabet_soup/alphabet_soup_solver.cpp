@@ -59,7 +59,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 //TODO
                                 //recursive call to scan_cell to scan for the
                                 //next letter in the direction dy=i-row, dx=j-col.
-                                if(scan_result.first == "") scan_cell(row, col, i - row, j - col, soup, node, scan_result);
+                                if(scan_result.first == "") scan_cell(row+j, col+i, i, j, soup, node, scan_result);
 
 
                                 //
