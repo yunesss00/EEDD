@@ -63,9 +63,11 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 dy = i - row;
                                 dx = j - col;
 
-                                if (dy != 0) scan_cell(row, col + 1, dy, dx, soup, node, scan_result);
-                                if (dx != 0) scan_cell(row + 1, col, dy, dx, soup, node, scan_result);
-                                if (dx != 0 && dy != 0) scan_cell(row + 1, col + 1, dy, dx, soup, node, scan_result);
+                                if (dy == 1) scan_cell(row, col + 1, dy, dx, soup, node, scan_result);
+                                if (dx == 1) scan_cell(row + 1, col, dy, dx, soup, node, scan_result);
+                                if (dy == -1) scan_cell(row, col - 1, dy, dx, soup, node, scan_result);
+                                if (dx == -1) scan_cell(row - 1, col, dy, dx, soup, node, scan_result);
+                                //if (dx != 0 && dy != 0) scan_cell(row + 1, col + 1, dy, dx, soup, node, scan_result);
                                 //
                                 //found a word?
                                 found = (scan_result.first != "");
