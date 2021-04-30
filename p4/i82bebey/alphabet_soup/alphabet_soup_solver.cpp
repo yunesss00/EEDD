@@ -86,7 +86,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     //TODO:
                     //Case 2: It is middle letter, so we follow the scanning
                     //direction (dx,dy) if we can.
-                    if (scan_result.fist == "") scan_cell(row+dx, col+dy, dy, dx, soup, node, scan_result);
+                    if (scan_result.first == "") scan_cell(row+dx, col+dy, dy, dx, soup, node, scan_result);
                     //
                     //Found a word?
                     found = (scan_result.first != "");
