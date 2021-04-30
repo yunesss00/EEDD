@@ -113,7 +113,7 @@ Trie::keys(std::string const& pref) const
     std::vector<std::string> keys;
     //TODO
     auto node = find_node(pref);
-    if (node == nullptr) preorder_traversal(node, keys);
+    if (node != nullptr) preorder_traversal(node, keys);
     //
     return keys;
 }
