@@ -69,7 +69,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 if (dx < 0) scan_cell(row - 1, col, dy, dx, soup, node, scan_result);
 
                                 if (dx > 0 && dy > 0) scan_cell(row + 1, col + 1, dy, dx, soup, node, scan_result);
-                                if (dx > 0 && dy < 0) scan_cell(row - 1, col + 1, dy, dx, soup, node, scan_result);
+                                if (dx > 0 && dy < 0) scan_cell(row + 1, col - 1, dy, dx, soup, node, scan_result);
                                 if (dx < 0 && dy > 0) scan_cell(row - 1, col + 1, dy, dx, soup, node, scan_result);
                                 if (dx < 0 && dy < 0) scan_cell(row - 1, col - 1, dy, dx, soup, node, scan_result);
 
