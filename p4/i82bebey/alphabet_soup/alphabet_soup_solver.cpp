@@ -72,7 +72,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     {
                         for(int j = -1; j <= 1; j++)
                         {
-                            if(j == 0 && b == 0)
+                            if(j == 0 && i == 0)
                                 j++;
                             if(scan_result.first == "")
                                 scan_cell(row+i, col+i, i, j, soup, node, scan_result);
