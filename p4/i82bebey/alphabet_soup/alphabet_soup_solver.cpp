@@ -52,7 +52,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     //TODO:
                     //Case 1: It is the first letter, so we must scan all eight
                     //neighbours, if possible, to find a word.
-                    for (int i = std::max(row-1, 0); i<std::min(row+2, soup.rows()) && !found; ++i)
+                    /*for (int i = std::max(row-1, 0); i<std::min(row+2, soup.rows()) && !found; ++i)
                         for (int j = std::max(col-1, 0); j< std::min(col+2, soup.cols()) && !found; ++j)
                         {
                             if (i!=row || j!=col) //we don't want to scan the central cell again.
@@ -66,14 +66,27 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 //found a word?
                                 found = (scan_result.first != "");
                             }
+                        }*/
+                        for(int i = -1; i <= 1; i++)
+
+                    {
+                        for(int j = -1; j <= 1; j++)
+                        {
+                            if(j == 0 && b == 0)
+                                j++;
+                            if(scan_result.first == "")
+                                scan_cell(row+i, col+i, i, j, soup, node, scan_result);
                         }
+                    }
+                    //Was a word found?
+                    found = (scan_result.first != "");
                 }
                 else
                 {
                     //TODO:
                     //Case 2: It is middle letter, so we follow the scanning
                     //direction (dx,dy) if we can.
-                    scan_cell(row+dx, col+dy, dy, dx, soup, node, scan_result);
+                    if (scan_result.fist == "") scan_cell(row+dx, col+dy, dy, dx, soup, node, scan_result);
                     //
                     //Found a word?
                     found = (scan_result.first != "");
