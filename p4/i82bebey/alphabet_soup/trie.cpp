@@ -177,15 +177,13 @@ Trie::preorder_traversal(TrieNode::Ref const& node,
                          std::vector<std::string> & keys) const
 {
     //TODO
-    if (node->value() != "")
-    {
-        keys.push_back(node->value());
-        for (std::map<char, std::shared_ptr<TrieNode>>::const_iterator i = node->children().begin(); i != node->children().end(); i++)
-        {
-            preorder_traversal(i->second, keys);
-        }
+    if (node->value() != "") keys.push_back(node->value());
 
+    for (std::map<char, std::shared_ptr<TrieNode>>::const_iterator i = node->children().begin(); i != node->children().end(); i++)
+    {
+        preorder_traversal(i->second, keys);
     }
+
     
 
     //
