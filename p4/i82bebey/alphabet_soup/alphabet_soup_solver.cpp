@@ -63,10 +63,10 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 dy = i - row;
                                 dx = j - col;
 
-                                if (dy > 0) scan_cell(row, col + 1, dy, dx, soup, node, scan_result);
-                                if (dx > 0) scan_cell(row + 1, col, dy, dx, soup, node, scan_result);
-                                if (dy < 0) scan_cell(row, col - 1, dy, dx, soup, node, scan_result);
-                                if (dx < 0) scan_cell(row - 1, col, dy, dx, soup, node, scan_result);
+                                if (dy > 0) scan_cell(row + 1, col, dy, dx, soup, node, scan_result);
+                                if (dx > 0) scan_cell(row, col + 1, dy, dx, soup, node, scan_result);
+                                if (dy < 0) scan_cell(row - 1, col, dy, dx, soup, node, scan_result);
+                                if (dx < 0) scan_cell(row, col - 1, dy, dx, soup, node, scan_result);
                                 //if (dx != 0 && dy != 0) scan_cell(row + 1, col + 1, dy, dx, soup, node, scan_result);
                                 //
                                 //found a word?
@@ -90,8 +90,6 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     //A word was found for this chain so push the current cell
                     //coordinates pair <row,cols> into the
                     //stack scan_result.second
-                    row = 0;
-                    col = 0;
                     scan_result.second.push(std::pair<int, int>(row, col));
 
                     //
