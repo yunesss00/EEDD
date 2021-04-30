@@ -63,8 +63,8 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 dy = i - row;
                                 dx = j - col;
 
-                                if (dy != 0) scan_cell(row, dy, dy, dx, soup, node, scan_result);
-                                if (dx != 0) scan_cell(dx, col, dy, dx, soup, node, scan_result);
+                                if (dy != 0) scan_cell(row, col + 1, dy, dx, soup, node, scan_result);
+                                if (dx != 0) scan_cell(row + 1, col, dy, dx, soup, node, scan_result);
 
                                 //
                                 //found a word?
