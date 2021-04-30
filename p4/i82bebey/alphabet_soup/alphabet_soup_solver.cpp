@@ -52,7 +52,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     //TODO:
                     //Case 1: It is the first letter, so we must scan all eight
                     //neighbours, if possible, to find a word.
-                    /*for (int i = std::max(row-1, 0); i<std::min(row+2, soup.rows()) && !found; ++i)
+                    for (int i = std::max(row-1, 0); i<std::min(row+2, soup.rows()) && !found; ++i)
                         for (int j = std::max(col-1, 0); j< std::min(col+2, soup.cols()) && !found; ++j)
                         {
                             if (i!=row || j!=col) //we don't want to scan the central cell again.
@@ -60,26 +60,17 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 //TODO
                                 //recursive call to scan_cell to scan for the
                                 //next letter in the direction dy=i-row, dx=j-col.
-                                scan_cell(row, col, i-row, j-col, soup, node, scan_result);
+                                dy = i - row;
+                                dx = j - col;
+
+                                if (dy != 0) scan_cell(row, col + 1, dy, dx, soup, node, scan_result);
+                                if (dx != 0) scan_cell(row + 1, col + 1, dy, dx, soup, node, scan_result);
 
                                 //
                                 //found a word?
                                 found = (scan_result.first != "");
                             }
-                        }*/
-                        for(int i = -1; i <= 1; i++)
-
-                    {
-                        for(int j = -1; j <= 1; j++)
-                        {
-                            if(j == 0 && i == 0)
-                                j++;
-                            if(scan_result.first == "")
-                                scan_cell(row+i, col+i, i, j, soup, node, scan_result);
                         }
-                    }
-                    //Was a word found?
-                    found = (scan_result.first != "");
                 }
                 else
                 {
@@ -97,7 +88,7 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                     //A word was found for this chain so push the current cell
                     //coordinates pair <row,cols> into the
                     //stack scan_result.second
-                    scan_result.second.push(std::make_pair(row, col));
+                    scan_result.second.push(std::pair<int, int>(row, col));
 
                     //
                 }
