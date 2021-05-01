@@ -60,11 +60,8 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 //TODO
                                 //recursive call to scan_cell to scan for the
                                 //next letter in the direction dy=i-row, dx=j-col.
-                                dy = i - row;
-                                dx = j - col;
-                                
-                                if (scan_result.first == "")
-                                {
+                                dx = i - row;
+                                dy = j - col;
 
                                 if (dy > 0) scan_cell(row, col + 1, dy, dx, soup, node, scan_result);
                                 if (dx > 0) scan_cell(row + 1, col, dy, dx, soup, node, scan_result);
@@ -75,7 +72,6 @@ scan_cell(int row, int col, int dy, int dx, AlphabetSoup const& soup,
                                 if (dx > 0 && dy < 0) scan_cell(row + 1, col - 1, dy, dx, soup, node, scan_result);
                                 if (dx < 0 && dy > 0) scan_cell(row - 1, col + 1, dy, dx, soup, node, scan_result);
                                 if (dx < 0 && dy < 0) scan_cell(row - 1, col - 1, dy, dx, soup, node, scan_result);
-                                }
                                 //if (dx != 0 && dy != 0) scan_cell(row + 1, col + 1, dy, dx, soup, node, scan_result);
                                 //
                                 //found a word?
