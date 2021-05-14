@@ -33,7 +33,15 @@ public:
               keyToInt key_to_int=keyToInt())
     {
         //TODO
-
+        m_ = m;
+        a_ = a;
+        b_ = b;
+        p_ = p;
+        key_to_int_ = key_to_int;
+        val_keys_ = 0;
+        tab_.resize(m_);
+        x_ = tab_[0].begin();
+        indx = 0;
         assert(is_empty());
         assert(!is_valid());
     }
@@ -49,7 +57,7 @@ public:
     bool is_empty()
     {
         //TODO
-        return true;
+    return num_of_valid_keys() == 0;
     }
 
     /**
@@ -59,7 +67,7 @@ public:
     bool is_valid() const
     {
         //TODO
-        return false;
+        return (indx < m_) && (x_ != tab_[indx].end());
     }
 
     /**
@@ -69,7 +77,7 @@ public:
     size_t num_of_valid_keys() const
     {
         //TODO
-        return 0;
+        return val_keys_;
     }
 
     /**
@@ -79,7 +87,7 @@ public:
     float load_factor() const
     {
         //TODO
-        return -1.0;
+        return num_of_valid_keys()/m_;
     }
 
     /**
@@ -88,12 +96,19 @@ public:
      * @return true if the key is saved into the table.
      * @warning The cursor is not affected by this operation.
      */
-    bool has(K const& k) const
+    bool has(K const& k)
     {
         //TODO
         //You can use find() but
         //you must remenber to restore the cursor at the end.
-        return false;
+        size_t oldIndx = indx;
+        typename std::list <std::pair<K,V>>::iterator oldx = x_;
+
+        bool auxi = find(k);
+
+        x_ = oldx;
+        indx = oldIndx;
+        return auxi;
     }
 
 
@@ -105,7 +120,7 @@ public:
     {
         assert(is_valid());
         //TODO
-        return K();
+        return std::get<0>(*x_);
     }
 
     /**
@@ -116,7 +131,7 @@ public:
     {
         assert(is_valid());
         //TODO
-        return V();
+    return std::get<1>(*x_);
     }
 
     /**
@@ -127,7 +142,7 @@ public:
     hash(uint64_t k) const
     {
         //TODO
-        return 0;
+        return ((((k) *a_) + b_) % p_) % static_cast<size_t>(m_);
     }
 
     /** @}*/
@@ -142,16 +157,36 @@ public:
      */
     bool find(K const& k)
     {        
-        bool is_found=false;
-
         //TODO
         //1. hash the key to get the table entry.
         //2. Is the table entry empty
         //2.1 yes, not found
         //2.2 else find into the chain (list) of the entry.
         // !!Remenber to update the cursor state.
+        size_t oldIndx = indx;
+        typename std::list <std::pair<K,V>>::iterator oldx = x_;
+        indx = hash(key_to_int_(k));
 
-        return is_found;
+        if(tab_[indx].empty())
+        {
+            indx = oldIndx;
+            return false;
+        }
+
+        x_ = tab_[indx].begin();
+
+        while(x_ != tab_[indx].end())
+        {
+            if(get_key() == k)
+            {
+                return true;
+            }
+            x_++;
+        }
+
+        indx = oldIndx;
+        x_ = oldx;
+        return false;
     }
 
     /**
@@ -173,6 +208,22 @@ public:
         //2.1 if it is found, reset the value part.
         //2.2 else, add the new pair (key,value) to the entry chain.
         //Remenber to update the cursor state and the valid keys counter.
+
+        if(find(k) == true)
+        {
+            *x_ = std::make_pair(get_key(), v);
+        }
+        else
+        {
+            indx = hash(key_to_int_(k));
+
+            tab_[indx].emplace_front(k, v);
+            x_ = tab_[indx].begin();
+            val_keys_++;
+        }
+
+        if(load_factor() > 0.9)
+        rehash();
 
         assert(is_valid());
         assert(get_key()==k);
@@ -196,18 +247,19 @@ public:
 
         //TODO
         //First save the current cursor state.
-
+        size_t oldIndx = indx;
+        typename std::list <std::pair <K, V>>::iterator oldx = x_;
         //
 
         goto_next(); //move the cursor to next position.
           
         //TODO
         //Second, remove the old cursor position.
-
+        tab_[oldIndx].erase(oldx);
+        val_keys_--;
         //
         
         assert( (num_of_valid_keys()+1)==old_n_valid_keys );
-        return;
     }
 
     /**
@@ -217,6 +269,7 @@ public:
     {
         assert(is_valid());
         //TODO
+        *x_ = std::make_pair(get_key(), v);
     }
 
     /**
@@ -237,14 +290,15 @@ public:
         }
 #endif
         //1. Save the state of the cursor.
-
+        K oldK = get_key(); 
+    
         //2. Pick up at random a new h.
-        uint64_t P = /*TODO use here the coefficiente P used for the hash function.*/ 0;
+        uint64_t P = p_ /*TODO use here the coefficiente P used for the hash function.*/;
         const uint64_t a = 1 + static_cast<uint64_t>(std::rand()/(RAND_MAX+1.0) * static_cast<double>(P-1));
         const uint64_t b = static_cast<uint64_t>(std::rand()/(RAND_MAX+1.0) * static_cast<double>(P));
 
         //3. Create a new table with double size with the new hash.
-        size_t M = /*TODO use the current table size.*/ 0;
+        size_t M = m_ /*TODO use the current table size.*/ ;
         HashTable<K, V, keyToInt> new_table (M*2, a, b);
 
         //TODO
@@ -253,7 +307,12 @@ public:
         //4.2 while isValid() do
         //4.3    insert in new table current pair key,value
         //4.4    goto next entry.
-
+        goto_begin();
+        while(is_valid())
+        {
+            new_table.insert(get_key(), get_value());
+            goto_next();
+        }
 
         //TODO
         //5 commute the new_table with this.
@@ -266,7 +325,7 @@ public:
         //6. Before returning, the cursor must be restored
         //to the same state that old state.
         //
-
+        find(oldK);
 
         //post condition
         assert(!old_is_valid || (is_valid() && old_key==get_key() && old_value==get_value()));
@@ -279,6 +338,20 @@ public:
     void goto_begin()
     {
         //TODO
+         if(tab_.empty())
+        {
+            indx = 0;
+            x_ = tab_[0].begin();
+        }
+        else
+        {
+            indx = 0;
+            while (tab_[indx].empty())
+            {
+                indx++;
+            }
+            x_ = tab_[indx].begin();
+        }
         assert(is_empty() || is_valid());
     }
 
@@ -290,6 +363,24 @@ public:
     {
         assert(is_valid());
         //TODO
+        if(!is_empty())
+        {
+            while(indx < m_)
+            {
+                x_++;
+                if(x_ == tab_[indx].end())
+                {
+                    indx++;
+                    x_ = tab_[indx].begin();
+                    if(x_ != tab_[indx].end())
+                        break;
+                }
+                else break;
+            }
+        }
+        else
+            goto_begin();
+        
     }
     /** @} */
 
@@ -299,7 +390,15 @@ protected:
     //Care must be taken about the type of the attributes.
     //It is recommended to use types that not imply to overload
     //the assign operator used in the rehash method.
-
+    typename std::list <std::pair <K, V>>::iterator x_;
+    std::vector <std::list <std::pair <K, V>>> tab_;
+    size_t indx;
+    uint64_t a_;
+    uint64_t b_;
+    uint64_t p_;
+    size_t m_;
+    size_t val_keys_;
+    keyToInt key_to_int_;
 };
 
 #endif

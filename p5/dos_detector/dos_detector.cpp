@@ -69,8 +69,18 @@ update_counters(Log& log, size_t &i, size_t& j,
         {
           //TODO
           //Process this ip according to the algorithm.
-
-
+                        
+            if(!counters.find(log[i].ip)){
+                counters.insert(log[i].ip, 1);
+            }    
+            
+            else{
+                counters.set_value(counters.get_value()+1);
+            }
+            
+            if(counters.get_value() >= max_acc){
+                System().ban_ip(log[i].ip, 60);
+            }
 
         }
         else
@@ -96,6 +106,13 @@ update_counters(Log& log, size_t &i, size_t& j,
             // - We can find the ip in the table and
             // - its counter must be >=0 after decrementing.
             //You should check these things to make sure you are doing well the work.
+        
+            if(counters.find(log[j].ip))
+            {
+                if(counters.get_value() >= 1){
+                    counters.set_value(counters.get_value()-1);
+                }    
+            }
         }
         ++j;
     }
