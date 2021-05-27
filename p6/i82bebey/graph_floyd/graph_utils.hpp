@@ -4,127 +4,69 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include <valarray>
 
 #include "graph.hpp"
 
 /**
- * @brief A matrix of scalars.
- * The matrix is a valarray of valarray's of type T.
- */
-template<class T>
-class Matrix: public std::valarray<std::valarray<T>>
-{
-public:
-    /**
-     * @brief Create an empty Matrix.
-     */
-    Matrix()
-    {
-        assert(is_empty());
-    }
-
-    /**
-     * @brief Create a matrix.
-     * @param rows the number of rows.
-     * @param cols the number of cols.
-     * @param fill_v the value used to initialize the elements.
-     * @pre rows==0 || cols>0
-     */
-    Matrix(size_t rows, size_t cols, const T fill_v= T(0))
-    {
-        assert(rows==0 || cols>0);
-        resize_matrix(rows, cols, fill_v);
-    }
-
-    /**
-     * @brief resize the matrix to a new size
-     * @param rows the number of rows.
-     * @param cols the number of columns.
-     * @param fill_v the value used to initialize the elements.
-     * @pre rows==0 || cols>0
-     */
-    void resize_matrix(size_t rows, size_t cols, const T fill_v= T(0))
-    {
-        assert(rows==0 || cols>0);
-        this->resize(rows, std::valarray<T>(fill_v, cols));
-    }
-
-    /**
-     * @brief Get the number of rows.
-     * @return the number of rows.
-     */
-    size_t rows() const
-    {
-        return this->size();
-    }
-
-    /**
-     * @brief Get the number of columns.
-     * @return the number of columns.
-     */
-    size_t cols() const
-    {
-        return (is_empty() ? 0 : (*this)[0].size());
-    }
-
-    /**
-     * @brief Is the matrix empty.
-     * @return true if the matrix is empty.
-     */
-    bool is_empty() const
-    {
-        return rows()==0;
-    }
-};
-
-/**
- * @brief Output the matrix to output stream.
- * @param out the output stream.
- * @return the modified stream.
- */
-template <class T>
-std::ostream& operator<<(std::ostream& out, Matrix<T> const& m)
-{
-    if (! m.is_empty())
-    {
-        out << "[ ";
-        for (size_t r = 0; r<m.rows(); ++r)
-        {
-            out<< '[' << m[r][0];
-            for(size_t c = 1; c < m.cols(); ++c)
-                out << ',' << m[r][c];
-            out << ']';
-            if (r < (m.rows()-1))
-                 out << ',' << std::endl;
-
-        }
-        out << " ]";
-    }
-    else
-        out << "[]";
-    return out;
-}
-
-/**
- * @brief A matrix of floats;
- */
-typedef Matrix<float> FMatrix;
-
-/**
- * @brief A matrix of integers;
- */
-typedef Matrix<float> IMatrix;
-
-/**
- * @brief Fold a weighted graph to an output stream.
- * Output format:
- * DIRECTED
- * <num. nodes>
+ * @brief unfold a weighted graph from an input stream.
+ * Input format:
+ * <capacity>
+ * <Nodes>
  * <node item_0>
  * ...
  * <node item_N-1>
- * <num. edges>
+ * <Edges>
+ * <u_0> <v_0> <weight_0>
+ * ...
+ * <u_E-1> <v_E-1> <weight_E-1>
+ */
+template <class T>
+bool
+unfold_wgraph(std::istream& in, WGraph<T>& g)
+{
+    size_t capacity;
+    in >> capacity;
+    if (!in)
+        return false;
+
+    g = WGraph<T>(capacity);
+
+    size_t n_nodes;
+    in >> n_nodes;
+    if (!in)
+        return false;
+
+    for(size_t n=0; n<n_nodes; ++n)
+    {
+        T item;
+        in >> item;
+        if (!in)
+            return false;
+        g.add_node(item);
+    }
+    size_t n_edges;
+    in >> n_edges;
+    for (size_t e=0;e<n_edges; ++e)
+    {
+        size_t u, v;
+        float w;
+        in >> u >> v >> w;
+        if (!in || u>=n_nodes || v>=n_nodes)
+            return false;
+        g.set_weight(g.node(u), g.node(v), w);
+    }
+    return true;
+}
+
+/**
+ * @brief Fold a weighted graph to an output stream.
+ * Input format:
+ * <capacity>
+ * <Nodes>
+ * <node item_0>
+ * ...
+ * <node item_N-1>
+ * <Edges>
  * <u_0> <v_0> <weight_0>
  * ...
  * <u_E-1> <v_E-1> <weight_E-1>
@@ -133,7 +75,7 @@ template <class T>
 bool
 fold_wgraph(std::ostream& out, WGraph<T> & g)
 {
-    out << "DIRECTED" << std::endl;
+    out << g.capacity() << std::endl;
     out << g.size() << std::endl;
     for (size_t n=0;n<g.size();++n)
         out << g.node(n)->item() << std::endl;
@@ -184,22 +126,10 @@ fold_wgraph(std::ostream& out, WGraph<T> & g)
 template<class T>
 std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
 {
-    assert(in);
-    std::shared_ptr<WGraph<T>> graph; //The returned graph.
-    bool is_directed = true;
-    std::string type;
-    in >> type;    
-    if (type != "DIRECTED")
-        is_directed = false;
+    assert(in);    
+    std::shared_ptr<WGraph<T>> ref;
 
-    size_t size;
-    in >> size;
-    if (!in)
-        return nullptr;
-    graph = std::make_shared<WGraph<T>>(size);
-
-    //TODO: read the input file and build the graph.
-    //Hint: Review how to add new nodes, edges to the graph.
+    //TODO
     //Renember if the graph is non directed, each edge u--v generate two
     //directed edges u-->v and v-->u.
     //If the input format is wrong, the throw std::runtime_error("Wrong graph").
@@ -235,9 +165,39 @@ std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
             graph.set_weight(aux1,aux2,val);
             
         }
+    }
+    else{ //NON DIRECTED
+        
+        for (int i = 0; i < n_nodes; i++)
+        {
+            T node;
+            in >> node;
+            graph.add_node(node);
+        }
+        std::string edges;
+        in >> edges;
+        int n_edges=stoi(edges);
+        for (int i = 0; i < n_edges; i++)
+        {
+            T edge1,edge2;
+            float val;
+            in >> edge1;
+            in >> edge2;
+            in >> val;
+           
 
-    //
-    return graph;
+            auto aux1=graph.find(edge1);
+            auto aux2=graph.find(edge2);
+            
+            graph.set_weight(aux1,aux2,val);
+            graph.set_weight(aux2,aux1,val);
+            
+        }
+
+    }
+
+    ref=std::make_shared<WGraph<T>>(graph);
+    return ref;
 }
 
 #endif //__GRAPH_UTILS_HPP__
