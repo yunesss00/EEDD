@@ -203,7 +203,7 @@ std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
     //Renember if the graph is non directed, each edge u--v generate two
     //directed edges u-->v and v-->u.
     //If the input format is wrong, the throw std::runtime_error("Wrong graph").
-    std::string type;
+    /*std::string type;
     in >> type;
     std::string nodes;
     in >> nodes;
@@ -268,7 +268,7 @@ std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
 
     ref=std::make_shared<WGraph<T>>(graph);
     return ref;
-
+*/
     //
     return graph;
 }
