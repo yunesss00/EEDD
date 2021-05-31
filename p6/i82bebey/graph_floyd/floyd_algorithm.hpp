@@ -60,24 +60,16 @@ void floyd_algorithm(WGraph<T>& g, FMatrix& D, IMatrix& I)
     I = IMatrix(g.size(), g.size(), -1);
 
     //TODO: Codify the Floyd algorithm.
-     for (int i = 0; i < g.size(); i++)
-        {
-            for (int t = 0; t < g.size(); t++)
-            {
-                I[i][t] = t;
-            }
-        }
-
         for (int k = 0; k < g.size(); k++)
         {
-            for (int v = 0; v < g.size(); v++)
+            for (int i = 0; i < g.size(); i++)
             {
-                for (int u = 0; u < g.size(); u++)
+                for (int j = 0; j < g.size(); j++)
                 {
-                    if (D[u][k] + D[k][v] < D[u][v])
+                    if (D[i][k] + D[k][j] < D[i][j])
                     {
-                        D[u][v] = D[u][k] + D[k][v];
-                        I[u][v] = I[u][k];
+                        D[i][j] = D[i][k] + D[k][j];
+                        I[i][j] = k;
                     }
                 }
             }
