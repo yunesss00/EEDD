@@ -186,8 +186,14 @@ std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
 {
     assert(in);    
     std::shared_ptr<WGraph<T>> ref;
+
+    //TODO: read the input file and build the graph.
+    //Hint: Review how to add new nodes, edges to the graph.
+    //Renember if the graph is non directed, each edge u--v generate two
+    //directed edges u-->v and v-->u.
+    //If the input format is wrong, the throw std::runtime_error("Wrong graph").
     
-    std::string type;
+  std::string type;
     in >> type;
     std::string nodes;
     in >> nodes;

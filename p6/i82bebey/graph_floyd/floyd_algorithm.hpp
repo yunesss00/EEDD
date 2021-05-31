@@ -93,17 +93,36 @@ floyd_compute_path(size_t u, size_t v, IMatrix const& I,
                    std::vector<size_t>& path)
 {
     //Prec: distance (u,v) < inf
-    std::stack<std::pair<size_t, size_t>> s;
-    path.resize(0);
+    path.resize(I.size());
 
-    //TODO: Find the path.
-    //Hint: Think first. Is it necessary to build a binary tree? or it
-    //is enough to do an in-depth search using an iterative approach with
-    //a stack of pairs (u->v).
+    //TODO:
+    //Think first: is it necessary to build a binary tree?
+    // or
+    // is it sufficient with a recursive descent by doing an in-depth search?
+    if(u==v){
+        path.resize(2);
+        path[0]=u;
+        path[1]=v;
+    }
+    else{
 
+    
+    auto start=u;
+    auto end=v;
+    path[0]=u;
+    int tam=1;
 
+        while (start != end)
+        {
+            start = I[start][end];
+            path[tam]=start;
+            tam++;
+        }
 
-    //
+        path[tam]=end;
+        path.resize(tam);
+    }
+    
 }
 
 
