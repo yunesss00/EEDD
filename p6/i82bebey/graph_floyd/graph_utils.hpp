@@ -184,6 +184,9 @@ fold_wgraph(std::ostream& out, WGraph<T> & g)
 template<class T>
 std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
 {
+    assert(in);    
+    std::shared_ptr<WGraph<T>> ref;
+    
     std::string type;
     in >> type;
     std::string nodes;
