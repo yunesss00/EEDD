@@ -111,14 +111,14 @@ floyd_compute_path(size_t u, size_t v, IMatrix const& I,
     auto start=u;
     auto end=v;
     int tam = 0;
-    path.resize(tam);
+    path.resize(tam + 1);
     path[tam] = u;
 
 
         while (start != end)
         {
             tam++;
-            path.resize(tam);
+            path.resize(tam + 1);
             start = I[start][end];
             path[tam] = start;
         }
