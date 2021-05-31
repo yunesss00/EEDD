@@ -100,8 +100,10 @@ floyd_compute_path(size_t u, size_t v, IMatrix const& I,
     //Hint: Think first. Is it necessary to build a binary tree? or it
     //is enough to do an in-depth search using an iterative approach with
     //a stack of pairs (u->v).
-    if(I[u][v] == -1){
-        path = {};
+    if(u==v){
+        path.resize(2);
+        path[0]=u;
+        path[1]=v;
     }
     else{
 
