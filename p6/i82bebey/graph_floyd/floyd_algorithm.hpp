@@ -23,8 +23,7 @@ void compute_weight_matrix(WGraph<T>& g, FMatrix& W)
     //Hint: scan all the edges. Use the node.label() to index the matrix.
     //Hint: Assume the graph is directed.
     //Hint: Review how to move the cursors.
-
-     for (size_t i = 0;  i < g.size(); i++)
+    for (size_t i = 0;  i < g.size(); i++)
      {
          for (size_t j = 0; j < g.size(); j++)
          {
@@ -61,7 +60,7 @@ void floyd_algorithm(WGraph<T>& g, FMatrix& D, IMatrix& I)
     I = IMatrix(g.size(), g.size(), -1);
 
     //TODO: Codify the Floyd algorithm.
- for (int i = 0; i < g.size(); i++)
+     for (int i = 0; i < g.size(); i++)
         {
             for (int t = 0; t < g.size(); t++)
             {
@@ -83,7 +82,6 @@ void floyd_algorithm(WGraph<T>& g, FMatrix& D, IMatrix& I)
                 }
             }
         }
-   
     //
 }
 
@@ -111,30 +109,7 @@ floyd_compute_path(size_t u, size_t v, IMatrix const& I,
     //is enough to do an in-depth search using an iterative approach with
     //a stack of pairs (u->v).
 
-  if(u==v){
-        path.resize(2);
-        path[0]=u;
-        path[1]=v;
-    }
-    else{
 
-    
-    auto start=u;
-    auto end=v;
-    path[0]=u;
-    int tam=1;
-
-        while (start != end)
-        {
-            start = I[start][end];
-            path[tam]=start;
-            tam++;
-        }
-
-        path[tam]=end;
-        path.resize(tam);
-    }
-    
 
     //
 }

@@ -184,26 +184,7 @@ fold_wgraph(std::ostream& out, WGraph<T> & g)
 template<class T>
 std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
 {
-    assert(in);
-    std::shared_ptr<WGraph<T>> graph; //The returned graph.
-    bool is_directed = true;
     std::string type;
-    in >> type;    
-    if (type != "DIRECTED")
-        is_directed = false;
-
-    size_t size;
-    in >> size;
-    if (!in)
-        return nullptr;
-    graph = std::make_shared<WGraph<T>>(size);
-
-    //TODO: read the input file and build the graph.
-    //Hint: Review how to add new nodes, edges to the graph.
-    //Renember if the graph is non directed, each edge u--v generate two
-    //directed edges u-->v and v-->u.
-    //If the input format is wrong, the throw std::runtime_error("Wrong graph").
-    /*std::string type;
     in >> type;
     std::string nodes;
     in >> nodes;
@@ -268,9 +249,6 @@ std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
 
     ref=std::make_shared<WGraph<T>>(graph);
     return ref;
-*/
-    //
-    return graph;
 }
 
 #endif //__GRAPH_UTILS_HPP__
