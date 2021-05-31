@@ -108,7 +108,7 @@ floyd_compute_path(size_t u, size_t v, IMatrix const& I,
     
     auto start=u;
     auto end=v;
-    path[0]=u;
+    
 
 
         while (start != end)
