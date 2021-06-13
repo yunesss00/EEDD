@@ -23,19 +23,16 @@ void compute_weight_matrix(WGraph<T>& g, FMatrix& W)
     //Hint: scan all the edges. Use the node.label() to index the matrix.
     //Hint: Assume the graph is directed.
     //Hint: Review how to move the cursors.
-    for (size_t i = 0;  i < g.size(); i++)
-     {
-         for (size_t j = 0; j < g.size(); j++)
-         {
-             if (g.are_adjacent(g.node(i),g.node(j)))
-             {
-                 W[i][j]=g.edge(g.node(i),g.node(j))->item();
-             }
-             
-         }
-         
-     }
-
+	g.goto_first_node();
+    while(g.has_current_node())
+    {
+        while (g.has_current_edge())
+        {
+            W[g.current_edge()->first()->label()][g.current_edge()->second()->label()] = g.current_edge()->item();
+            g.goto_next_edge();
+        }
+        g.goto_next_node();
+    }
     //
 }
 
@@ -60,20 +57,20 @@ void floyd_algorithm(WGraph<T>& g, FMatrix& D, IMatrix& I)
     I = IMatrix(g.size(), g.size(), -1);
 
     //TODO: Codify the Floyd algorithm.
-        for (int k = 0; k < g.size(); k++)
+    for(size_t k=0;k<g.size();k++)
+    {
+        for(size_t i=0;i<g.size();i++)
         {
-            for (int i = 0; i < g.size(); i++)
+            for(size_t j=0;j<g.size();j++)
             {
-                for (int j = 0; j < g.size(); j++)
+                if(D[i][k]+D[k][j] < D[i][j])
                 {
-                    if (D[i][k] + D[k][j] < D[i][j])
-                    {
-                        D[i][j] = D[i][k] + D[k][j];
-                        I[i][j] = k;
-                    }
+                    D[i][j] = D[i][k]+D[k][j];
+                    I[i][j] = k;
                 }
             }
         }
+    }
     //
 }
 
@@ -88,6 +85,18 @@ void floyd_algorithm(WGraph<T>& g, FMatrix& D, IMatrix& I)
  * @post u is the first item of path.
  * @post v is the last item of path.
  */
+
+inline void
+camino_floyd(size_t u, size_t v, IMatrix const&  I, std::vector<size_t>& path)
+{
+    if(I[u][v]!=-1)
+    {
+        camino_floyd(u,I[u][v],I,path);
+        path.push_back(I[u][v]);
+        camino_floyd(I[u][v],v,I,path);
+    }
+}
+
 inline void
 floyd_compute_path(size_t u, size_t v, IMatrix const& I,
                    std::vector<size_t>& path)
@@ -100,36 +109,11 @@ floyd_compute_path(size_t u, size_t v, IMatrix const& I,
     //Hint: Think first. Is it necessary to build a binary tree? or it
     //is enough to do an in-depth search using an iterative approach with
     //a stack of pairs (u->v).
-    if(u==v){
-        path.resize(2);
-        path[0]=u;
-        path[1]=v;
-    }
-    else{
+ 	path.push_back(u);
 
-    
-    auto start=u;
-    auto end=v;
-    int tam = 0;
-    path.resize(tam + 1);
-    path[tam] = u;
+    camino_floyd(u,v,I,path);
 
-
-        while (start != end)
-        {
-            tam++;
-            path.resize(tam + 1);
-            start = I[start][end];
-            path[tam] = start;
-        }
-        path.resize(tam + 2);
-        path[tam+1] = v;
-
-
-    }
-    
-
-
+    path.push_back(v);
     //
 }
 

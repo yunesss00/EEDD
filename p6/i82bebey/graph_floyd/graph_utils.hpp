@@ -184,80 +184,52 @@ fold_wgraph(std::ostream& out, WGraph<T> & g)
 template<class T>
 std::shared_ptr<WGraph<T>> create_wgraph(std::istream &in) noexcept(false)
 {
-    assert(in);    
-    std::shared_ptr<WGraph<T>> ref;
+    assert(in);
+    std::shared_ptr<WGraph<T>> graph; //The returned graph.
+    bool is_directed = true;
+    std::string type;
+    in >> type;    
+    if (type != "DIRECTED")
+        is_directed = false;
+
+    size_t size;
+    in >> size;
+    if (!in)
+        return nullptr;
+    graph = std::make_shared<WGraph<T>>(size);
 
     //TODO: read the input file and build the graph.
     //Hint: Review how to add new nodes, edges to the graph.
     //Renember if the graph is non directed, each edge u--v generate two
     //directed edges u-->v and v-->u.
     //If the input format is wrong, the throw std::runtime_error("Wrong graph").
-    
-  std::string type;
-    in >> type;
-    std::string nodes;
-    in >> nodes;
-    int n_nodes=stoi(nodes);
-    WGraph<T> graph(n_nodes);
-
-    if(type=="DIRECTED"){  //DIRECTED
-        for (int i = 0; i < n_nodes; i++)
-        {
-            T node;
-            in >> node;
-            graph.add_node(node);
-        }
-        std::string edges;
-        in >> edges;
-        int n_edges=stoi(edges);
-        for (int i = 0; i < n_edges; i++)
-        {
-            T edge1,edge2;
-            float val;
-            in >> edge1;
-            in >> edge2;
-            in >> val;
-           
-
-            auto aux1=graph.find(edge1);
-            auto aux2=graph.find(edge2);
-            
-            graph.set_weight(aux1,aux2,val);
-            
-        }
+    for(size_t n=0; n<size; ++n)
+    {
+        T item;
+        if (!in)
+            return nullptr;
+        in >> item;
+        graph->add_node(item);
     }
-    else{ //NON DIRECTED
+
+    size_t n_edges;
+    in >> n_edges;
+    for (size_t e=0;e<n_edges; ++e)
+    {
+        T u,v;
+        float w;
+
+        in >> u >> v >> w;
+
+        graph->set_weight(graph->find(u), graph->find(v), w);
         
-        for (int i = 0; i < n_nodes; i++)
+        if(is_directed==false)
         {
-            T node;
-            in >> node;
-            graph.add_node(node);
-        }
-        std::string edges;
-        in >> edges;
-        int n_edges=stoi(edges);
-        for (int i = 0; i < n_edges; i++)
-        {
-            T edge1,edge2;
-            float val;
-            in >> edge1;
-            in >> edge2;
-            in >> val;
-           
+            graph->set_weight(graph->find(v), graph->find(u), w);
 
-            auto aux1=graph.find(edge1);
-            auto aux2=graph.find(edge2);
-            
-            graph.set_weight(aux1,aux2,val);
-            graph.set_weight(aux2,aux1,val);
-            
         }
-
     }
-
-    ref=std::make_shared<WGraph<T>>(graph);
-    return ref;
+    return graph;
 }
 
 #endif //__GRAPH_UTILS_HPP__
